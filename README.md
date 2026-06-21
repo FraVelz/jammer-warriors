@@ -56,4 +56,23 @@ Workflow: [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
 
 Vercel: `pnpm install && pnpm run build`
 
+Set these **Environment Variables** in the Vercel project (Production + Preview). They are baked in at build time:
+
+| Variable                     | Required | Notes                                             |
+| ---------------------------- | -------- | ------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`       | Yes      | Must match the public domain (e.g. custom domain) |
+| `NEXT_PUBLIC_PAYPAL_EMAIL`   | Yes      | Shown on the storefront                           |
+| `NEXT_PUBLIC_DISCORD_INVITE` | Yes      | Ticket / delivery link                            |
+| `NEXT_PUBLIC_DELIVERY_FEE`   | Yes      | Flat fee in EUR                                   |
+
+If `NEXT_PUBLIC_SITE_URL` is missing in production, the build falls back to `VERCEL_URL`. Use an explicit URL when you have a custom domain so sitemap, canonical and Open Graph stay correct.
+
+Copy from [`.env.example`](./.env.example) as a starting point.
+
+## Security & dependencies
+
+- Production responses include security headers (CSP, HSTS, `X-Frame-Options`, etc.) via [`next.config.ts`](./next.config.ts).
+- Run `pnpm audit` periodically. A moderate PostCSS advisory may appear via `next` (`next>postcss@8.4.31`); it is bundled inside Next.js and is mitigated when upstream releases a patched version — overrides in this repo do not replace that copy.
+- PayPal amounts are shown client-side only (manual checkout); verify payments against Discord tickets operationally.
+
 See [ICONS.md](./ICONS.md) for icon attribution.
