@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Icon } from "@/components/icons";
+import { PageShell } from "@/components/layout/PageShell";
 import type { LegalDocument, LegalSlug } from "@/features/legal/content/types";
 import { ShopHeaderCompact } from "@/features/shop/components/ShopHeader";
 
@@ -66,7 +67,7 @@ type LegalPageLayoutProps = {
 
 export function LegalPageLayout({ document }: LegalPageLayoutProps) {
   return (
-    <main className="mx-auto max-w-3xl">
+    <PageShell width="legal">
       <ShopHeaderCompact />
       <Link
         href="/"
@@ -109,6 +110,6 @@ export function LegalPageLayout({ document }: LegalPageLayoutProps) {
       </div>
 
       <LegalCrossLinks slug={document.slug} />
-    </main>
+    </PageShell>
   );
 }

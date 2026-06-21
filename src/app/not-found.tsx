@@ -4,7 +4,10 @@ import { PageShell } from "@/components/layout/PageShell";
 
 export default function NotFound() {
   return (
-    <PageShell className="flex min-h-[70vh] flex-col items-center justify-center text-center">
+    <PageShell
+      width="shop"
+      className="flex min-h-[70vh] flex-col items-center justify-center text-center"
+    >
       <div className="border-js-border bg-js-bg-card mb-6 flex h-24 w-24 items-center justify-center rounded-full border">
         <Icon name="radio" size={48} className="text-js-accent animate-pulse" />
       </div>

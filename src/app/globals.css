@@ -43,3 +43,26 @@ body {
   background: var(--color-js-accent);
   color: var(--color-js-bg);
 }
+
+.js-nav-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.js-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-js-accent);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.25s ease;
+}
+
+.js-nav-link:hover::after,
+.js-nav-link:focus-visible::after {
+  transform: scaleX(1);
+}

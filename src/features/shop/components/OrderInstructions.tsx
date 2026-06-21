@@ -60,11 +60,11 @@ export function OrderInstructions() {
         </span>
       </p>
 
-      <div className="my-5 flex flex-wrap justify-center gap-6 max-sm:flex-col max-sm:items-center">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
         {STEPS.map((step) => (
           <div
             key={step.num}
-            className="border-js-border bg-js-bg-card min-w-[150px] rounded border px-6 py-4"
+            className="border-js-border bg-js-bg-card rounded border p-4 text-left sm:text-center"
           >
             <div className="text-js-accent text-2xl font-bold">{step.num}</div>
             <div className="text-js-text-muted mt-1 text-sm">

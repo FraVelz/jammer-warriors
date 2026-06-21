@@ -9,6 +9,9 @@ const NAV_LINKS = [
   { href: "#contact", label: "contact" },
 ] as const;
 
+const NAV_LINK_CLASS =
+  "js-nav-link text-sm text-[#aaa] transition-colors hover:text-js-accent";
+
 export function ShopHeader() {
   return (
     <header className="border-js-accent mb-10 flex flex-wrap items-start justify-between gap-4 border-b-2 pb-5">
@@ -25,18 +28,11 @@ export function ShopHeader() {
       </div>
       <nav className="mt-2.5 flex flex-wrap gap-x-5 gap-y-2">
         {NAV_LINKS.map(({ href, label }) => (
-          <Link
-            key={href}
-            href={href}
-            className="hover:text-js-accent text-sm text-[#aaa] hover:underline"
-          >
+          <Link key={href} href={href} className={NAV_LINK_CLASS}>
             {label}
           </Link>
         ))}
-        <Link
-          href="/terms"
-          className="hover:text-js-accent text-sm text-[#aaa] hover:underline"
-        >
+        <Link href="/terms" className={NAV_LINK_CLASS}>
           legal
         </Link>
       </nav>

@@ -45,7 +45,7 @@ export function ProductGrid({ products, onBuy }: ProductGridProps) {
   return (
     <div
       id="products"
-      className="mb-14 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8 max-sm:grid-cols-1"
+      className="mb-12 grid grid-cols-1 gap-5 sm:mb-14 sm:grid-cols-2 sm:gap-6"
     >
       {products.map((product) => (
         <ProductCard key={product.id} product={product} onBuy={onBuy} />

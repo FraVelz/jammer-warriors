@@ -1,5 +1,6 @@
 "use client";
 
+import { PageShell } from "@/components/layout/PageShell";
 import { LegalWarning } from "@/features/legal/components/LegalWarning";
 import { DIY_TUTORIALS } from "@/features/shop/data/diy-tutorials";
 import { PRODUCTS } from "@/features/shop/data/products";
@@ -30,7 +31,7 @@ export function ShopPage() {
   } = usePurchaseFlow();
 
   return (
-    <>
+    <PageShell width="shop">
       <ShopHeader />
       <LegalWarning />
       <OrderInstructions />
@@ -47,6 +48,6 @@ export function ShopPage() {
         onClose={closePurchase}
         onConfirm={confirmAndScroll}
       />
-    </>
+    </PageShell>
   );
 }

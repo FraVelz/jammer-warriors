@@ -46,7 +46,7 @@ export function DiySection({ tutorials, onBuy }: DiySectionProps) {
         </Link>
         .
       </p>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-6 max-sm:grid-cols-1">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
         {tutorials.map((tutorial) => (
           <DiyCard key={tutorial.id} tutorial={tutorial} onBuy={onBuy} />
         ))}
