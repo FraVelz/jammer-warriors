@@ -1,5 +1,7 @@
 # Jammer Warriors (JammerShop)
 
+[![CI](https://github.com/FraVelz/jammer-warriors/actions/workflows/ci.yml/badge.svg)](https://github.com/FraVelz/jammer-warriors/actions/workflows/ci.yml)
+
 Next.js storefront for pre-built jammers and DIY tutorials. PayPal + Discord ticket workflow.
 
 ## Stack
@@ -20,11 +22,11 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Environment
 
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_PAYPAL_EMAIL` | PayPal payment email |
+| Variable                     | Description               |
+| ---------------------------- | ------------------------- |
+| `NEXT_PUBLIC_PAYPAL_EMAIL`   | PayPal payment email      |
 | `NEXT_PUBLIC_DISCORD_INVITE` | Discord server invite URL |
-| `NEXT_PUBLIC_DELIVERY_FEE` | Flat delivery fee (EUR) |
+| `NEXT_PUBLIC_DELIVERY_FEE`   | Flat delivery fee (EUR)   |
 
 ## Scripts
 
@@ -33,7 +35,19 @@ pnpm dev        # development server
 pnpm build      # production build
 pnpm lint       # ESLint
 pnpm typecheck  # TypeScript
+pnpm format:check
 ```
+
+## CI
+
+GitHub Actions runs on every push/PR to `main`:
+
+- ESLint (`pnpm lint`)
+- Prettier (`pnpm format:check`)
+- TypeScript (`pnpm typecheck`)
+- Production build (`pnpm build`)
+
+Workflow: [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
 
 ## Deploy
 

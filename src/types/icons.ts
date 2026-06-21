@@ -11,4 +11,7 @@ export type IconName =
   | "package"
   | "triangle-alert"
   | "chevron-right"
-  | "arrow-left";
+  | "arrow-left"
+  | "menu"
+  | "x"
+  | "radio";

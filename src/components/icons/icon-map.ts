@@ -5,13 +5,16 @@ import { ArrowLeftIcon } from "./svg/ArrowLeftIcon";
 import { BatteryFullIcon } from "./svg/BatteryFullIcon";
 import { ChevronRightIcon } from "./svg/ChevronRightIcon";
 import { MailIcon } from "./svg/MailIcon";
+import { MenuIcon } from "./svg/MenuIcon";
 import { MessageCircleIcon } from "./svg/MessageCircleIcon";
 import { PackageIcon } from "./svg/PackageIcon";
 import { PinIcon } from "./svg/PinIcon";
 import { PlugIcon } from "./svg/PlugIcon";
+import { RadioIcon } from "./svg/RadioIcon";
 import { ShieldIcon } from "./svg/ShieldIcon";
 import { TriangleAlertIcon } from "./svg/TriangleAlertIcon";
 import { WrenchIcon } from "./svg/WrenchIcon";
+import { XIcon } from "./svg/XIcon";
 import { ZapIcon } from "./svg/ZapIcon";
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
@@ -30,4 +33,7 @@ export const ICON_MAP: Record<IconName, IconComponent> = {
   "triangle-alert": TriangleAlertIcon,
   "chevron-right": ChevronRightIcon,
   "arrow-left": ArrowLeftIcon,
+  menu: MenuIcon,
+  x: XIcon,
+  radio: RadioIcon,
 };
