@@ -28,7 +28,7 @@ export function PurchaseModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4"
+      className="js-modal-backdrop"
       role="presentation"
       onClick={onClose}
       onKeyDown={(e) => e.key === "Escape" && onClose()}
@@ -37,7 +37,7 @@ export function PurchaseModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="purchase-modal-title"
-        className="border-js-accent bg-js-bg-card max-h-[90vh] w-full max-w-lg overflow-y-auto rounded border p-6 shadow-xl"
+        className="js-modal-panel"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-start justify-between gap-4">
@@ -93,7 +93,7 @@ export function PurchaseModal({
                 href={discordInvite}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-js-accent break-all hover:underline"
+                className="js-text-link break-all"
               >
                 {discordInvite}
               </a>
@@ -126,7 +126,7 @@ export function PurchaseModal({
           />
           <span>
             I confirm I have read the{" "}
-            <Link href="/terms" className="text-js-accent hover:underline">
+            <Link href="/terms" className="js-text-link">
               Terms
             </Link>{" "}
             and accept full responsibility for compliance with my local laws.
@@ -142,16 +142,12 @@ export function PurchaseModal({
               "cursor-pointer rounded-sm px-6 py-2.5 text-sm font-bold",
               termsAccepted
                 ? "bg-js-accent text-js-bg hover:bg-js-accent-hover"
-                : "cursor-not-allowed bg-[#333] text-[#666]",
+                : "bg-js-btn-disabled-bg text-js-btn-disabled-text cursor-not-allowed",
             )}
           >
             I understand — show payment steps
           </button>
-          <button
-            type="button"
-            onClick={onClose}
-            className="border-js-border text-js-text-muted cursor-pointer rounded-sm border px-4 py-2.5 text-sm hover:text-white"
-          >
+          <button type="button" onClick={onClose} className="js-btn-cancel">
             cancel
           </button>
         </div>

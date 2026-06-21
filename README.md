@@ -9,6 +9,7 @@ Next.js storefront for pre-built jammers and DIY tutorials. PayPal + Discord tic
 - Next.js 16 (App Router), React 19, TypeScript
 - Tailwind CSS 4
 - Icons: Lucide SVG (vendored via icons0 MCP)
+- ESLint, Prettier, react-doctor
 
 ## Setup
 
@@ -31,11 +32,12 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Scripts
 
 ```bash
-pnpm dev        # development server
-pnpm build      # production build
-pnpm lint       # ESLint
-pnpm typecheck  # TypeScript
-pnpm format:check
+pnpm dev            # development server
+pnpm build          # production build
+pnpm lint           # ESLint
+pnpm typecheck      # TypeScript
+pnpm format:check   # Prettier
+pnpm react:doctor   # React Doctor audit
 ```
 
 ## CI

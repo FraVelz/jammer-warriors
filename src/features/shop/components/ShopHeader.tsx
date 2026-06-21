@@ -12,9 +12,6 @@ const NAV_LINKS = [
   { href: "#contact", label: "contact" },
 ] as const;
 
-const NAV_LINK_CLASS =
-  "js-nav-link text-sm text-[#aaa] transition-colors hover:text-js-accent";
-
 type NavLinksProps = {
   className?: string;
   linkClassName?: string;
@@ -22,7 +19,7 @@ type NavLinksProps = {
 };
 
 function NavLinks({ className, linkClassName, onNavigate }: NavLinksProps) {
-  const linkClass = cn(NAV_LINK_CLASS, linkClassName);
+  const linkClass = cn("js-nav-link", linkClassName);
 
   return (
     <div className={className}>
@@ -62,7 +59,7 @@ export function ShopHeader() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="border-js-accent mb-10 border-b-2 pb-5">
+    <header className="js-header-shop">
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
           <h1 className="text-js-accent flex items-center gap-2 text-[28px] tracking-tight">
@@ -71,7 +68,7 @@ export function ShopHeader() {
               <span className="text-js-danger">Jammer</span>Shop
             </span>
           </h1>
-          <p className="mt-1 text-sm text-[#777]">
+          <p className="text-js-text-tagline mt-1 text-sm">
             real devices • real tutorials • no bullshit
           </p>
         </div>
@@ -85,7 +82,7 @@ export function ShopHeader() {
 
         <button
           type="button"
-          className="border-js-border text-js-text-muted hover:border-js-accent hover:text-js-accent flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded border sm:hidden"
+          className="js-btn-menu"
           onClick={() => setMenuOpen(true)}
           aria-expanded={menuOpen}
           aria-controls="mobile-nav"
@@ -99,13 +96,13 @@ export function ShopHeader() {
         <>
           <button
             type="button"
-            className="fixed inset-0 z-40 bg-black/70 sm:hidden"
+            className="js-mobile-nav-backdrop"
             aria-label="Close menu"
             onClick={closeMenu}
           />
           <nav
             id="mobile-nav"
-            className="border-js-border bg-js-bg-card fixed top-0 right-0 z-50 flex h-full w-[min(280px,85vw)] flex-col border-l p-5 shadow-xl sm:hidden"
+            className="js-mobile-nav-panel"
             aria-label="Main"
           >
             <div className="mb-6 flex items-center justify-between">

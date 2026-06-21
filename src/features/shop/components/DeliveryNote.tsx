@@ -4,10 +4,7 @@ import { getSiteConfig } from "@/features/shop/data/site-config";
 
 export function DeliveryNote() {
   return (
-    <div
-      id="delivery"
-      className="border-js-accent bg-js-delivery-bg my-8 border-l-4 px-5 py-4 text-[15px]"
-    >
+    <div id="delivery" className="js-delivery-note">
       <p className="text-js-accent flex items-center gap-2 font-bold">
         <Icon name="package" size={18} />
         delivery – €{getSiteConfig().deliveryFee} flat rate
@@ -19,7 +16,7 @@ export function DeliveryNote() {
         <br />
         <span className="text-js-text-dim text-sm">
           (some countries restricted – ask before ordering — see{" "}
-          <Link href="/terms#shipping-restrictions" className="text-js-accent">
+          <Link href="/terms#shipping-restrictions" className="js-text-link">
             terms
           </Link>
           )

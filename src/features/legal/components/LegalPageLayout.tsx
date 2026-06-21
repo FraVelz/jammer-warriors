@@ -51,7 +51,7 @@ export function LegalCrossLinks({ slug }: LegalCrossLinksProps) {
       {links.map((link, i) => (
         <span key={link.href}>
           {i > 0 ? " · " : ""}
-          <Link href={link.href} className="text-js-accent hover:underline">
+          <Link href={link.href} className="js-text-link">
             {link.label}
           </Link>
         </span>
@@ -71,7 +71,7 @@ export function LegalPageLayout({ document }: LegalPageLayoutProps) {
       <ShopHeaderCompact />
       <Link
         href="/"
-        className="text-js-accent mb-6 inline-flex items-center gap-2 text-sm hover:underline"
+        className="js-text-link mb-6 inline-flex items-center gap-2 text-sm"
       >
         <Icon name="arrow-left" size={16} />
         back to shop
@@ -84,10 +84,7 @@ export function LegalPageLayout({ document }: LegalPageLayoutProps) {
         <p className="text-js-text-muted mt-2">{document.description}</p>
       </header>
 
-      <nav
-        aria-label="On this page"
-        className="border-js-border bg-js-bg-card mb-8 rounded border p-4 text-sm"
-      >
+      <nav aria-label="On this page" className="js-toc-nav">
         <p className="text-js-accent mb-2 font-bold">On this page</p>
         <ul className="space-y-1">
           {document.sections.map((section) => (

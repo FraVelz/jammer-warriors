@@ -1,35 +1,14 @@
 import { Icon } from "@/components/icons";
+import { cn } from "@/lib/cn";
 import { getSiteConfig } from "@/features/shop/data/site-config";
 
-const STEPS = [
-  {
-    num: "1",
-    title: "Send PayPal to",
-    highlight: true,
-  },
-  {
-    num: "2",
-    title: "Join our Discord server",
-  },
-  {
-    num: "3",
-    title: "Open a ticket with payment proof",
-    sub: "(screenshot)",
-  },
-  {
-    num: "4",
-    title: "Get your product or tutorial",
-  },
-] as const;
+const STEPS = [{ num: "1" }, { num: "2" }, { num: "3" }, { num: "4" }] as const;
 
 export function OrderInstructions() {
   const { paypalEmail, discordInvite } = getSiteConfig();
 
   return (
-    <section
-      id="order-instruction"
-      className="border-js-accent bg-js-order-bg mb-10 rounded border-2 p-6 text-center"
-    >
+    <section id="order-instruction" className="js-order-section">
       <h2 className="text-js-accent mb-2 flex items-center justify-center gap-2 text-[22px]">
         <Icon name="pin" size={22} />
         PAYPAL ONLY – SEND PAYMENT
@@ -38,8 +17,8 @@ export function OrderInstructions() {
         Send payment via PayPal to the email below.
       </p>
 
-      <div className="border-js-accent bg-js-bg-card2 mx-auto my-4 inline-block rounded border px-4 py-3">
-        <div className="text-js-text-dim flex items-center justify-center gap-2 text-xs tracking-[2px] uppercase">
+      <div className="js-order-email-box">
+        <div className="js-order-email-label">
           <Icon name="mail" size={14} />
           PayPal Email
         </div>
@@ -48,7 +27,12 @@ export function OrderInstructions() {
         </div>
       </div>
 
-      <p className="text-js-text-dim mx-auto mb-4 flex max-w-xl items-start justify-center gap-2 text-sm">
+      <p
+        className={cn(
+          "text-js-text-dim mx-auto mb-4 flex max-w-xl items-start justify-center gap-2",
+          "text-sm",
+        )}
+      >
         <Icon
           name="triangle-alert"
           size={16}
@@ -62,10 +46,7 @@ export function OrderInstructions() {
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
         {STEPS.map((step) => (
-          <div
-            key={step.num}
-            className="border-js-border bg-js-bg-card rounded border p-4 text-left sm:text-center"
-          >
+          <div key={step.num} className="js-step-card">
             <div className="text-js-accent text-2xl font-bold">{step.num}</div>
             <div className="text-js-text-muted mt-1 text-sm">
               {step.num === "1" && (
@@ -106,7 +87,7 @@ export function OrderInstructions() {
         href={discordInvite}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-js-discord hover:bg-js-discord-hover mt-4 inline-flex items-center gap-2 rounded px-10 py-3.5 text-lg font-bold text-white no-underline"
+        className="js-btn-discord"
       >
         <Icon name="message-circle" size={20} />
         JOIN DISCORD & OPEN TICKET

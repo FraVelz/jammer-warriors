@@ -1,14 +1,18 @@
 import Link from "next/link";
 import { Icon } from "@/components/icons";
 import { PageShell } from "@/components/layout/PageShell";
+import { cn } from "@/lib/cn";
 
 export default function NotFound() {
   return (
     <PageShell
       width="shop"
-      className="flex min-h-[70vh] flex-col items-center justify-center text-center"
+      className={cn(
+        "flex min-h-[70vh] flex-col items-center justify-center",
+        "text-center",
+      )}
     >
-      <div className="border-js-border bg-js-bg-card mb-6 flex h-24 w-24 items-center justify-center rounded-full border">
+      <div className="js-icon-badge">
         <Icon name="radio" size={48} className="text-js-accent animate-pulse" />
       </div>
       <p className="text-js-accent mb-2 text-sm tracking-[0.3em] uppercase">

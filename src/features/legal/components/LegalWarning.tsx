@@ -2,7 +2,7 @@ import { Icon } from "@/components/icons";
 
 export function LegalWarning() {
   return (
-    <div className="border-js-danger bg-js-warning-bg text-js-danger-soft mb-10 flex gap-3 border p-4 text-sm">
+    <div className="js-legal-warning">
       <Icon
         name="triangle-alert"
         size={20}

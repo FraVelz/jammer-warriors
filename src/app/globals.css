@@ -7,10 +7,15 @@
   --color-js-bg-card: #1a1a1a;
   --color-js-bg-card2: #1a2a1a;
   --color-js-border: #2a2a2a;
+  --color-js-border-subtle: #222222;
   --color-js-text: #dddddd;
   --color-js-text-muted: #aaaaaa;
   --color-js-text-dim: #888888;
   --color-js-text-faint: #666666;
+  --color-js-text-nav: #aaaaaa;
+  --color-js-text-tagline: #777777;
+  --color-js-text-footer: #555555;
+  --color-js-text-footer-dim: #444444;
   --color-js-accent: #88ff88;
   --color-js-accent-hover: #66dd66;
   --color-js-danger: #ff4444;
@@ -20,6 +25,11 @@
   --color-js-delivery-bg: #1a1a2a;
   --color-js-discord: #5865f2;
   --color-js-discord-hover: #4752c4;
+  --color-js-btn-muted-bg: #333333;
+  --color-js-btn-muted-border: #444444;
+  --color-js-btn-muted-border-hover: #555555;
+  --color-js-btn-disabled-bg: #333333;
+  --color-js-btn-disabled-text: #666666;
 }
 
 html {
@@ -44,25 +54,214 @@ body {
   color: var(--color-js-bg);
 }
 
-.js-nav-link {
-  position: relative;
-  text-decoration: none;
-}
+@layer components {
+  .js-text-link {
+    @apply text-js-accent hover:underline;
+  }
 
-.js-nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 1px;
-  background-color: var(--color-js-accent);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.25s ease;
-}
+  .js-nav-link {
+    @apply text-js-text-nav hover:text-js-accent relative text-sm no-underline transition-colors;
+  }
 
-.js-nav-link:hover::after,
-.js-nav-link:focus-visible::after {
-  transform: scaleX(1);
+  .js-nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-js-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.25s ease;
+  }
+
+  .js-nav-link:hover::after,
+  .js-nav-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .js-card {
+    @apply border-js-border bg-js-bg-card rounded border;
+  }
+
+  .js-card-interactive {
+    @apply bg-js-bg-card relative isolate overflow-hidden rounded;
+    border: 1px solid var(--color-js-border);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .js-card-interactive::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 0;
+    width: 160%;
+    aspect-ratio: 1;
+    opacity: 0;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg 24deg,
+      var(--color-js-accent) 36deg 84deg,
+      transparent 96deg 168deg,
+      var(--color-js-accent) 180deg 228deg,
+      transparent 240deg 360deg
+    );
+    transform: translate(-50%, -50%) rotate(0deg);
+    transition: opacity 0.25s ease;
+    animation: js-card-border-spin 2.6s linear infinite;
+    animation-play-state: paused;
+  }
+
+  .js-card-interactive::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    z-index: 0;
+    border-radius: calc(0.25rem - 1px);
+    background: var(--color-js-bg-card);
+    pointer-events: none;
+  }
+
+  .js-card-interactive:hover,
+  .js-card-interactive:focus-within {
+    border-color: transparent;
+    box-shadow: 0 0 22px
+      color-mix(in srgb, var(--color-js-accent) 18%, transparent);
+  }
+
+  .js-card-interactive:hover::before,
+  .js-card-interactive:focus-within::before {
+    opacity: 1;
+    animation-play-state: running;
+  }
+
+  .js-card-interactive > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes js-card-border-spin {
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js-card-interactive::before {
+      animation: none;
+    }
+
+    .js-card-interactive:hover,
+    .js-card-interactive:focus-within {
+      border-color: var(--color-js-accent);
+      box-shadow: none;
+    }
+  }
+
+  .js-card-stack {
+    @apply flex h-full flex-col;
+  }
+
+  .js-shop-grid {
+    @apply grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4;
+  }
+
+  .js-btn-primary {
+    @apply bg-js-accent text-js-bg hover:bg-js-accent-hover inline-flex cursor-pointer items-center rounded-sm px-6 py-2.5 text-sm font-bold;
+  }
+
+  .js-btn-secondary {
+    @apply border-js-border text-js-text-muted inline-flex cursor-pointer items-center rounded-sm border px-6 py-2.5 text-sm hover:text-white;
+  }
+
+  .js-btn-buy {
+    @apply bg-js-accent text-js-bg hover:bg-js-accent-hover mt-auto inline-block w-fit cursor-pointer rounded-sm px-6 py-2.5 text-sm font-bold;
+  }
+
+  .js-btn-diy {
+    @apply text-js-text mt-auto inline-block w-fit cursor-pointer rounded-sm border border-[color:var(--color-js-btn-muted-border)] bg-[color:var(--color-js-btn-muted-bg)] px-4 py-1.5 text-sm hover:border-[color:var(--color-js-btn-muted-border-hover)] hover:bg-[color:var(--color-js-btn-muted-border)] hover:text-white;
+  }
+
+  .js-btn-discord {
+    @apply bg-js-discord hover:bg-js-discord-hover mt-4 inline-flex items-center gap-2 rounded px-10 py-3.5 text-lg font-bold text-white no-underline;
+  }
+
+  .js-btn-cancel {
+    @apply border-js-border text-js-text-muted cursor-pointer rounded-sm border px-4 py-2.5 text-sm hover:text-white;
+  }
+
+  .js-btn-menu {
+    @apply border-js-border text-js-text-muted hover:border-js-accent hover:text-js-accent flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded border sm:hidden;
+  }
+
+  .js-header-shop {
+    @apply border-js-accent mb-10 border-b-2 pb-5;
+  }
+
+  .js-mobile-nav-backdrop {
+    @apply fixed inset-0 z-40 bg-black/70 sm:hidden;
+  }
+
+  .js-mobile-nav-panel {
+    @apply border-js-border bg-js-bg-card fixed top-0 right-0 z-50 flex h-full flex-col border-l p-5 shadow-xl sm:hidden;
+    width: min(280px, 85vw);
+  }
+
+  .js-modal-backdrop {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4;
+  }
+
+  .js-modal-panel {
+    @apply border-js-accent bg-js-bg-card max-h-[90vh] w-full max-w-lg overflow-y-auto rounded border p-6 shadow-xl;
+  }
+
+  .js-order-section {
+    @apply border-js-accent bg-js-order-bg mb-10 rounded border-2 p-6 text-center;
+  }
+
+  .js-order-email-box {
+    @apply border-js-accent bg-js-bg-card2 mx-auto my-4 inline-block rounded border px-4 py-3;
+  }
+
+  .js-order-email-label {
+    @apply text-js-text-dim flex items-center justify-center gap-2 text-xs tracking-[2px] uppercase;
+  }
+
+  .js-step-card {
+    @apply border-js-border bg-js-bg-card rounded border p-4 text-left sm:text-center;
+  }
+
+  .js-legal-warning {
+    @apply border-js-danger bg-js-warning-bg text-js-danger-soft mb-10 flex gap-3 border p-4 text-sm;
+  }
+
+  .js-contact-section {
+    @apply border-js-border bg-js-bg-card mt-12 rounded border p-6;
+  }
+
+  .js-delivery-note {
+    @apply border-js-accent bg-js-delivery-bg my-8 border-l-4 px-5 py-4 text-[15px];
+  }
+
+  .js-icon-badge {
+    @apply border-js-border bg-js-bg-card mb-6 flex h-24 w-24 items-center justify-center rounded-full border;
+  }
+
+  .js-toc-nav {
+    @apply border-js-border bg-js-bg-card mb-8 rounded border p-4 text-sm;
+  }
+
+  .js-feature-list-item {
+    @apply text-js-text-muted border-js-border-subtle flex items-start gap-2 border-b py-1.5 text-sm;
+  }
+
+  .js-footer {
+    @apply border-js-border-subtle text-js-text-footer mt-14 border-t pt-8 text-center text-[13px];
+  }
+
+  .js-footer-note {
+    @apply text-js-text-footer-dim mt-2 flex items-center justify-center gap-2 text-xs;
+  }
 }

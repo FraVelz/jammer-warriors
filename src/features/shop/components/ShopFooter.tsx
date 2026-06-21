@@ -6,10 +6,7 @@ export function ContactSection() {
   const { paypalEmail, discordInvite } = getSiteConfig();
 
   return (
-    <section
-      id="contact"
-      className="border-js-border bg-js-bg-card mt-12 rounded border p-6"
-    >
+    <section id="contact" className="js-contact-section">
       <p className="text-js-text-muted flex items-start gap-2 text-[15px]">
         <Icon name="message-circle" size={18} className="mt-0.5 shrink-0" />
         <span>
@@ -20,7 +17,7 @@ export function ContactSection() {
             href={discordInvite}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-js-accent hover:underline"
+            className="js-text-link"
           >
             Discord server
           </a>{" "}
@@ -37,9 +34,9 @@ export function ContactSection() {
 
 export function ShopFooter() {
   return (
-    <footer className="mt-14 border-t border-[#222] pt-8 text-center text-[13px] text-[#555]">
+    <footer className="js-footer">
       <p>© 2026 JammerShop – real devices, real tutorials</p>
-      <p className="mt-2 flex items-center justify-center gap-2 text-xs text-[#444]">
+      <p className="js-footer-note">
         <Icon name="triangle-alert" size={14} />
         <span>
           for educational & testing use only.
@@ -48,15 +45,15 @@ export function ShopFooter() {
         </span>
       </p>
       <p className="mt-2">
-        <Link href="/privacy" className="text-js-accent hover:underline">
+        <Link href="/privacy" className="js-text-link">
           privacy
         </Link>
         {" · "}
-        <Link href="/terms" className="text-js-accent hover:underline">
+        <Link href="/terms" className="js-text-link">
           terms
         </Link>
         {" · "}
-        <Link href="/refunds" className="text-js-accent hover:underline">
+        <Link href="/refunds" className="js-text-link">
           refunds
         </Link>
       </p>
