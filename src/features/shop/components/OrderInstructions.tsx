@@ -60,7 +60,14 @@ export function OrderInstructions() {
                 <>
                   Join our
                   <br />
-                  Discord server
+                  <a
+                    href={discordInvite}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="js-text-link"
+                  >
+                    Discord server
+                  </a>
                 </>
               )}
               {step.num === "3" && (

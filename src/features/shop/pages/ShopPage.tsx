@@ -33,11 +33,11 @@ export function ShopPage() {
     <PageShell width="shop">
       <ShopHeader />
       <LegalWarning />
-      <OrderInstructions />
       <ProductsSectionTitle />
       <ProductGrid products={PRODUCTS} onBuy={openProductPurchase} />
       <DeliveryNote />
       <DiySection tutorials={DIY_TUTORIALS} onBuy={openDiyPurchase} />
+      <OrderInstructions />
       <ContactSection />
       <ShopFooter />
       <PurchaseModal
