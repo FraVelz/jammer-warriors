@@ -24,7 +24,7 @@ jobs:
       NEXT_PUBLIC_PAYPAL_EMAIL: cotsalva3@gmail.com
       NEXT_PUBLIC_DISCORD_INVITE: https://discord.gg/r3GnxdWF
       NEXT_PUBLIC_DELIVERY_FEE: "5"
-      NEXT_PUBLIC_SITE_URL: https://example.com
+      NEXT_PUBLIC_SITE_URL: https://jammer-warriors.vercel.app
 
     steps:
       - name: Checkout

@@ -6,6 +6,8 @@ import { getSiteUrl } from "@/lib/seo/site-url";
 export function ShopJsonLd() {
   const base = getSiteUrl();
   const { deliveryFee } = getSiteConfig();
+  const catalogUrl = `${base}/#products`;
+  const diyUrl = `${base}/#diy`;
 
   const productItems = PRODUCTS.map((product, index) => ({
     "@type": "ListItem" as const,
@@ -13,11 +15,13 @@ export function ShopJsonLd() {
     item: {
       "@type": "Product" as const,
       name: product.name,
+      url: catalogUrl,
       offers: {
         "@type": "Offer" as const,
         price: product.price + deliveryFee,
         priceCurrency: "EUR",
         availability: "https://schema.org/InStock",
+        url: catalogUrl,
       },
     },
   }));
@@ -28,11 +32,13 @@ export function ShopJsonLd() {
     item: {
       "@type": "Product" as const,
       name: tutorial.name,
+      url: diyUrl,
       offers: {
         "@type": "Offer" as const,
         price: tutorial.price,
         priceCurrency: "EUR",
         availability: "https://schema.org/InStock",
+        url: diyUrl,
       },
     },
   }));
@@ -46,7 +52,13 @@ export function ShopJsonLd() {
         url: base,
       },
       {
+        "@type": "WebSite",
+        name: "JammerShop",
+        url: base,
+      },
+      {
         "@type": "ItemList",
+        url: catalogUrl,
         itemListElement: [...productItems, ...tutorialItems],
       },
     ],
