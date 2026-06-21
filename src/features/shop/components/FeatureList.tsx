@@ -1,4 +1,4 @@
-import { Icon } from "@/components/icons";
+import { Icon } from "@/components/icons/Icon";
 import { cn } from "@/lib/cn";
 
 type FeatureListProps = {

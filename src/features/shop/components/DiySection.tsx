@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Icon } from "@/components/icons";
+import { Icon } from "@/components/icons/Icon";
 import type { DiyTutorial } from "@/features/shop/data/diy-tutorials";
 import { cn } from "@/lib/cn";
 import { FeatureList } from "./FeatureList";

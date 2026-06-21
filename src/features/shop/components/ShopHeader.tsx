@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Icon } from "@/components/icons";
+import { Icon } from "@/components/icons/Icon";
 import { cn } from "@/lib/cn";
 
 const NAV_LINKS = [

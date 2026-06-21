@@ -10,13 +10,6 @@ const securityHeaders = [
   },
 ];
 
-const staticAssetCacheHeaders = [
-  {
-    key: "Cache-Control",
-    value: "public, max-age=31536000, immutable",
-  },
-];
-
 const nextConfig: NextConfig = {
   async headers() {
     const rules = [
@@ -26,11 +19,16 @@ const nextConfig: NextConfig = {
       },
     ];
 
-    // Long-lived cache only in production — in dev it breaks HMR / chunk loading.
+    // Only in production — never override /_next cache headers in dev (breaks HMR).
     if (process.env.NODE_ENV === "production") {
       rules.unshift({
         source: "/_next/static/:path*",
-        headers: staticAssetCacheHeaders,
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
       });
     }
 

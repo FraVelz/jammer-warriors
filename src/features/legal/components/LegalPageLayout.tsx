@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Icon } from "@/components/icons";
+import { Icon } from "@/components/icons/Icon";
 import { PageShell } from "@/components/layout/PageShell";
 import type { LegalDocument, LegalSlug } from "@/features/legal/content/types";
 import { ShopHeaderCompact } from "@/features/shop/components/ShopHeader";

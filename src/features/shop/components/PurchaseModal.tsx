@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Icon } from "@/components/icons";
+import { Icon } from "@/components/icons/Icon";
 import { cn } from "@/lib/cn";
 import { getSiteConfig } from "@/features/shop/data/site-config";
 import type { PurchaseItem } from "@/features/shop/types/purchase";

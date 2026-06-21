@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@/components/icons";
+import { Icon } from "@/components/icons/Icon";
 import type { Product } from "@/features/shop/data/products";
 import { getSiteConfig } from "@/features/shop/data/site-config";
 import { cn } from "@/lib/cn";

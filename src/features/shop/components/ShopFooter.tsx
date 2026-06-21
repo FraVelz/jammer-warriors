@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Icon } from "@/components/icons";
+import { Icon } from "@/components/icons/Icon";
 import { getSiteConfig } from "@/features/shop/data/site-config";
 
 export function ContactSection() {
