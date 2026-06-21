@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/icons/Icon";
 import { PageShell } from "@/components/layout/PageShell";
 import { cn } from "@/lib/cn";
+
+export const metadata: Metadata = {
+  title: "Page Not Found",
+  description:
+    "This page does not exist. Return to JammerShop for jammers and DIY tutorials.",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (
@@ -13,7 +21,7 @@ export default function NotFound() {
       )}
     >
       <div className="js-icon-badge">
-        <Icon name="radio" size={48} className="text-js-accent animate-pulse" />
+        <Icon name="radio" size={48} className="text-js-accent js-icon-pulse" />
       </div>
       <p className="text-js-accent mb-2 text-sm tracking-[0.3em] uppercase">
         signal lost

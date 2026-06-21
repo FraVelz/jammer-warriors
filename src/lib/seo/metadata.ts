@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getSiteUrl } from "@/lib/seo/site-url";
 
 const SITE_NAME = "JammerShop";
 const DEFAULT_TITLE = "Jammer Shop – Real Jammers & DIY";
@@ -32,9 +33,7 @@ export function rootLayoutMetadata(): Metadata {
       template: `%s – ${SITE_NAME}`,
     },
     description: DEFAULT_DESCRIPTION,
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-    ),
+    metadataBase: new URL(getSiteUrl()),
     openGraph: sharedOpenGraph(),
     twitter: sharedTwitter(),
   };
