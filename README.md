@@ -23,12 +23,12 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Environment
 
-| Variable                     | Description                                      |
-| ---------------------------- | ------------------------------------------------ |
-| `NEXT_PUBLIC_PAYPAL_EMAIL`   | PayPal payment email                             |
-| `NEXT_PUBLIC_DISCORD_INVITE` | Discord server invite URL                        |
-| `NEXT_PUBLIC_DELIVERY_FEE`   | Flat delivery fee (EUR)                          |
-| `NEXT_PUBLIC_SITE_URL`       | Canonical site URL (SEO, sitemap, Open Graph)    |
+| Variable                     | Description                                   |
+| ---------------------------- | --------------------------------------------- |
+| `NEXT_PUBLIC_PAYPAL_EMAIL`   | PayPal payment email                          |
+| `NEXT_PUBLIC_DISCORD_INVITE` | Discord server invite URL                     |
+| `NEXT_PUBLIC_DELIVERY_FEE`   | Flat delivery fee (EUR)                       |
+| `NEXT_PUBLIC_SITE_URL`       | Canonical site URL (SEO, sitemap, Open Graph) |
 
 ## Scripts
 
