@@ -15,7 +15,7 @@
   --color-js-text-nav: #aaaaaa;
   --color-js-text-tagline: #777777;
   --color-js-text-footer: #555555;
-  --color-js-text-footer-dim: #444444;
+  --color-js-text-footer-dim: #666666;
   --color-js-accent: #88ff88;
   --color-js-accent-hover: #66dd66;
   --color-js-danger: #ff4444;
@@ -34,6 +34,12 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -158,6 +164,14 @@ body {
       border-color: var(--color-js-accent);
       box-shadow: none;
     }
+
+    .js-icon-pulse {
+      animation: none;
+    }
+  }
+
+  .js-icon-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   .js-card-stack {
@@ -181,7 +195,7 @@ body {
   }
 
   .js-btn-diy {
-    @apply text-js-text mt-auto inline-block w-fit cursor-pointer rounded-sm border border-[color:var(--color-js-btn-muted-border)] bg-[color:var(--color-js-btn-muted-bg)] px-4 py-1.5 text-sm hover:border-[color:var(--color-js-btn-muted-border-hover)] hover:bg-[color:var(--color-js-btn-muted-border)] hover:text-white;
+    @apply text-js-text mt-auto inline-block min-h-11 w-fit cursor-pointer rounded-sm border border-[color:var(--color-js-btn-muted-border)] bg-[color:var(--color-js-btn-muted-bg)] px-4 py-2.5 text-sm hover:border-[color:var(--color-js-btn-muted-border-hover)] hover:bg-[color:var(--color-js-btn-muted-border)] hover:text-white;
   }
 
   .js-btn-discord {
@@ -193,7 +207,7 @@ body {
   }
 
   .js-btn-menu {
-    @apply border-js-border text-js-text-muted hover:border-js-accent hover:text-js-accent flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded border sm:hidden;
+    @apply border-js-border text-js-text-muted hover:border-js-accent hover:text-js-accent flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded border sm:hidden;
   }
 
   .js-header-shop {

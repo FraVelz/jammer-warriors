@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/icons/Icon";
 import { cn } from "@/lib/cn";
 
@@ -37,6 +37,8 @@ function NavLinks({ className, linkClassName, onNavigate }: NavLinksProps) {
 
 export function ShopHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -44,8 +46,35 @@ export function ShopHeader() {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
+    const panel = panelRef.current;
+    const focusable = panel
+      ? Array.from(
+          panel.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+          ),
+        )
+      : [];
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    first?.focus();
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab" || focusable.length === 0) return;
+
+      if (event.shiftKey) {
+        if (document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        }
+      } else if (document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
     };
 
     window.addEventListener("keydown", onKeyDown);
@@ -56,7 +85,10 @@ export function ShopHeader() {
     };
   }, [menuOpen]);
 
-  const closeMenu = () => setMenuOpen(false);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    menuButtonRef.current?.focus();
+  };
 
   return (
     <header className="js-header-shop">
@@ -81,6 +113,7 @@ export function ShopHeader() {
         </nav>
 
         <button
+          ref={menuButtonRef}
           type="button"
           className="js-btn-menu"
           onClick={() => setMenuOpen(true)}
@@ -101,6 +134,7 @@ export function ShopHeader() {
             onClick={closeMenu}
           />
           <nav
+            ref={panelRef}
             id="mobile-nav"
             className="js-mobile-nav-panel"
             aria-label="Main"
