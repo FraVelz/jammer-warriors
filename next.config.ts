@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const securityHeaders = [
+const baseSecurityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -24,12 +24,26 @@ const securityHeaders = [
   },
 ];
 
+function securityHeaders() {
+  if (process.env.NODE_ENV !== "production") {
+    return baseSecurityHeaders;
+  }
+
+  return [
+    ...baseSecurityHeaders,
+    {
+      key: "Strict-Transport-Security",
+      value: "max-age=63072000; includeSubDomains; preload",
+    },
+  ];
+}
+
 const nextConfig: NextConfig = {
   async headers() {
     const rules = [
       {
         source: "/(.*)",
-        headers: securityHeaders,
+        headers: securityHeaders(),
       },
     ];
 
