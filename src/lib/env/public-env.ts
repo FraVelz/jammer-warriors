@@ -1,20 +1,17 @@
-const DEV_DEFAULTS = {
+const PUBLIC_DEFAULTS = {
   NEXT_PUBLIC_PAYPAL_EMAIL: "cotsalva3@gmail.com",
   NEXT_PUBLIC_DISCORD_INVITE: "https://discord.gg/r3GnxdWF",
   NEXT_PUBLIC_DELIVERY_FEE: "5",
 } as const;
 
-type PublicEnvKey = keyof typeof DEV_DEFAULTS;
+type PublicEnvKey = keyof typeof PUBLIC_DEFAULTS;
 
 function isProductionBuild(): boolean {
   return process.env.NODE_ENV === "production";
 }
 
 export function getPublicEnv(key: PublicEnvKey): string {
-  const value = process.env[key];
-  if (value) return value;
-  if (!isProductionBuild()) return DEV_DEFAULTS[key];
-  throw new Error(`${key} is required in production builds`);
+  return process.env[key] ?? PUBLIC_DEFAULTS[key];
 }
 
 export function getPublicEnvNumber(key: "NEXT_PUBLIC_DELIVERY_FEE"): number {
