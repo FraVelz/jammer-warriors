@@ -1,13 +1,9 @@
-export function getSiteConfig() {
-  const paypalEmail =
-    process.env.NEXT_PUBLIC_PAYPAL_EMAIL ?? "cotsalva3@gmail.com";
-  const discordInvite =
-    process.env.NEXT_PUBLIC_DISCORD_INVITE ?? "https://discord.gg/r3GnxdWF";
-  const deliveryFee = Number(process.env.NEXT_PUBLIC_DELIVERY_FEE ?? "5");
+import { getPublicEnv, getPublicEnvNumber } from "@/lib/env/public-env";
 
+export function getSiteConfig() {
   return {
-    paypalEmail,
-    discordInvite,
-    deliveryFee,
+    paypalEmail: getPublicEnv("NEXT_PUBLIC_PAYPAL_EMAIL"),
+    discordInvite: getPublicEnv("NEXT_PUBLIC_DISCORD_INVITE"),
+    deliveryFee: getPublicEnvNumber("NEXT_PUBLIC_DELIVERY_FEE"),
   };
 }
