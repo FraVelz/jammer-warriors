@@ -1,3 +1,10 @@
 allowBuilds:
   sharp: true
   unrs-resolver: true
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  - "@tailwindcss/postcss"
+  - "@tailwindcss/oxide"
+  - "@tailwindcss/oxide-linux-x64-gnu"
+  - "@tailwindcss/oxide-linux-x64-musl"
+trustPolicy: no-downgrade

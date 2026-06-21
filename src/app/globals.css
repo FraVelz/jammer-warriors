@@ -209,8 +209,18 @@ body {
     width: min(280px, 85vw);
   }
 
-  .js-modal-backdrop {
-    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4;
+  .js-modal-dialog {
+    border: none;
+    padding: 0;
+    margin: auto;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .js-modal-dialog::backdrop {
+    background: rgb(0 0 0 / 0.75);
   }
 
   .js-modal-panel {

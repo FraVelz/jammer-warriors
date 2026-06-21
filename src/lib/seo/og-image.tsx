@@ -1,9 +1,3 @@
-import { ImageResponse } from "next/og";
-
-export const ogImageAlt = "JammerShop – Real Jammers & DIY";
-export const ogImageSize = { width: 1200, height: 630 };
-export const ogImageContentType = "image/png";
-
 export function OgImage() {
   return (
     <div
@@ -90,10 +84,4 @@ export function OgImage() {
       </div>
     </div>
   );
-}
-
-export function createOgImageResponse() {
-  return new ImageResponse(<OgImage />, {
-    ...ogImageSize,
-  });
 }

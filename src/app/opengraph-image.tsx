@@ -3,7 +3,7 @@ import {
   ogImageAlt,
   ogImageContentType,
   ogImageSize,
-} from "@/lib/seo/og-image";
+} from "@/lib/seo/og-image-metadata";
 
 export const alt = ogImageAlt;
 export const size = ogImageSize;

@@ -11,16 +11,15 @@ import {
 import { DeliveryNote } from "@/features/shop/components/DeliveryNote";
 import { DiySection } from "@/features/shop/components/DiySection";
 import { OrderInstructions } from "@/features/shop/components/OrderInstructions";
-import {
-  ProductGrid,
-  ProductsSectionTitle,
-} from "@/features/shop/components/ProductGrid";
+import { ProductGrid } from "@/features/shop/components/ProductGrid";
+import { ProductsSectionTitle } from "@/features/shop/components/ProductsSectionTitle";
 import { PurchaseModal } from "@/features/shop/components/PurchaseModal";
 import { ShopHeader } from "@/features/shop/components/ShopHeader";
 import { usePurchaseFlow } from "@/features/shop/hooks/usePurchaseFlow";
 
 export function ShopPage() {
   const {
+    dialogRef,
     item,
     termsAccepted,
     setTermsAccepted,
@@ -42,6 +41,7 @@ export function ShopPage() {
       <ContactSection />
       <ShopFooter />
       <PurchaseModal
+        dialogRef={dialogRef}
         item={item}
         termsAccepted={termsAccepted}
         onTermsChange={setTermsAccepted}

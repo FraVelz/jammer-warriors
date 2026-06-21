@@ -40,7 +40,7 @@ type LegalCrossLinksProps = {
   slug: LegalSlug;
 };
 
-export function LegalCrossLinks({ slug }: LegalCrossLinksProps) {
+function LegalCrossLinks({ slug }: LegalCrossLinksProps) {
   const links = CROSS_LINKS[slug];
   return (
     <nav

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { DiyTutorial } from "@/features/shop/data/diy-tutorials";
 import type { Product } from "@/features/shop/data/products";
 import { getSiteConfig } from "@/features/shop/data/site-config";
@@ -13,8 +13,15 @@ function scrollToOrderInstructions() {
 }
 
 export function usePurchaseFlow() {
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const [item, setItem] = useState<PurchaseItem | null>(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
+
+  const closePurchase = useCallback(() => {
+    dialogRef.current?.close();
+    setItem(null);
+    setTermsAccepted(false);
+  }, []);
 
   const openProductPurchase = useCallback((product: Product) => {
     const { deliveryFee } = getSiteConfig();
@@ -26,6 +33,7 @@ export function usePurchaseFlow() {
       total: product.price + deliveryFee,
       includesDelivery: true,
     });
+    queueMicrotask(() => dialogRef.current?.showModal());
   }, []);
 
   const openDiyPurchase = useCallback((tutorial: DiyTutorial) => {
@@ -37,11 +45,7 @@ export function usePurchaseFlow() {
       total: tutorial.price,
       includesDelivery: false,
     });
-  }, []);
-
-  const closePurchase = useCallback(() => {
-    setItem(null);
-    setTermsAccepted(false);
+    queueMicrotask(() => dialogRef.current?.showModal());
   }, []);
 
   const confirmAndScroll = useCallback(() => {
@@ -51,6 +55,7 @@ export function usePurchaseFlow() {
   }, [termsAccepted, closePurchase]);
 
   return {
+    dialogRef,
     item,
     termsAccepted,
     setTermsAccepted,
