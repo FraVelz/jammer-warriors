@@ -58,7 +58,7 @@ body {
   height: 1px;
   background-color: var(--color-js-accent);
   transform: scaleX(0);
-  transform-origin: right center;
+  transform-origin: left center;
   transition: transform 0.25s ease;
 }
 

@@ -12,14 +12,14 @@ type DiyCardProps = {
 
 function DiyCard({ tutorial, onBuy }: DiyCardProps) {
   return (
-    <article className="border-js-border bg-js-bg-card rounded border p-5">
+    <article className="border-js-border bg-js-bg-card flex h-full flex-col rounded border p-5">
       <h3 className="text-[17px] text-white">{tutorial.name}</h3>
       <p className="text-js-accent text-lg font-bold">€{tutorial.price}</p>
-      <FeatureList items={tutorial.features} className="my-2" />
+      <FeatureList items={tutorial.features} className="my-2 flex-1" />
       <button
         type="button"
         onClick={() => onBuy(tutorial)}
-        className="text-js-text mt-2 inline-block cursor-pointer rounded-sm border border-[#444] bg-[#333] px-4 py-1.5 text-sm hover:border-[#555] hover:bg-[#444] hover:text-white"
+        className="text-js-text mt-auto inline-block w-fit cursor-pointer rounded-sm border border-[#444] bg-[#333] px-4 py-1.5 text-sm hover:border-[#555] hover:bg-[#444] hover:text-white"
       >
         {tutorial.cta}
       </button>
@@ -46,7 +46,7 @@ export function DiySection({ tutorials, onBuy }: DiySectionProps) {
         </Link>
         .
       </p>
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
         {tutorials.map((tutorial) => (
           <DiyCard key={tutorial.id} tutorial={tutorial} onBuy={onBuy} />
         ))}

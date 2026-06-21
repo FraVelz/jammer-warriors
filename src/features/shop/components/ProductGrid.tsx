@@ -15,7 +15,7 @@ export function ProductCard({ product, onBuy }: ProductCardProps) {
   const { deliveryFee } = getSiteConfig();
 
   return (
-    <article className="border-js-border bg-js-bg-card hover:border-js-accent rounded border p-6 transition-colors">
+    <article className="border-js-border bg-js-bg-card hover:border-js-accent flex h-full flex-col rounded border p-6 transition-colors">
       <Icon name={product.icon} size={40} className="text-js-text mb-2" />
       <h2 className="text-xl text-white">{product.name}</h2>
       <p className="text-js-accent my-2 text-[26px] font-bold">
@@ -24,11 +24,11 @@ export function ProductCard({ product, onBuy }: ProductCardProps) {
           + €{deliveryFee} delivery
         </small>
       </p>
-      <FeatureList items={product.features} className="my-4" />
+      <FeatureList items={product.features} className="my-4 flex-1" />
       <button
         type="button"
         onClick={() => onBuy(product)}
-        className="bg-js-accent text-js-bg hover:bg-js-accent-hover mt-2 inline-block cursor-pointer rounded-sm px-6 py-2.5 text-sm font-bold"
+        className="bg-js-accent text-js-bg hover:bg-js-accent-hover mt-auto inline-block w-fit cursor-pointer rounded-sm px-6 py-2.5 text-sm font-bold"
       >
         buy now
       </button>
@@ -45,7 +45,7 @@ export function ProductGrid({ products, onBuy }: ProductGridProps) {
   return (
     <div
       id="products"
-      className="mb-12 grid grid-cols-1 gap-5 sm:mb-14 sm:grid-cols-2 sm:gap-6"
+      className="mb-12 grid grid-cols-1 gap-5 sm:mb-14 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4"
     >
       {products.map((product) => (
         <ProductCard key={product.id} product={product} onBuy={onBuy} />

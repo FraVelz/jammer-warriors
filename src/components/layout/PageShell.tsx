@@ -4,14 +4,14 @@ type PageShellProps = {
   children: React.ReactNode;
   className?: string;
   as?: "main" | "div";
-  /** shop: 896px · legal: 768px · wide: 1024px */
+  /** shop/wide: 1152px · legal: 768px */
   width?: "shop" | "legal" | "wide";
 };
 
 const WIDTH_CLASS = {
-  shop: "max-w-4xl",
+  shop: "max-w-6xl",
   legal: "max-w-3xl",
-  wide: "max-w-5xl",
+  wide: "max-w-6xl",
 } as const;
 
 export function PageShell({
