@@ -91,6 +91,7 @@ export function OrderInstructions() {
       </div>
 
       <a
+        id="discord-ticket"
         href={discordInvite}
         target="_blank"
         rel="noopener noreferrer"
