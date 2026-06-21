@@ -1,0 +1,24 @@
+---
+description: Dónde colocar código en jammer-warriors
+alwaysApply: true
+---
+
+# Alcance de código (jammer-warriors)
+
+App **Next.js App Router** con `src/`.
+
+## Árbol de decisión
+
+1. **¿Ruta o layout?** → `src/app/<segmento>/page.tsx`, `layout.tsx`.
+2. **¿Feature de tienda?** → `src/features/shop/` (`pages/`, `components/`, `data/`, `hooks/`).
+3. **¿Feature legal?** → `src/features/legal/` (`pages/`, `components/`, `content/`).
+4. **¿Iconos compartidos?** → `src/components/icons/`.
+5. **¿Hook o util?** → `src/lib/`.
+6. **¿Estilo global?** → `src/app/globals.css`.
+7. **¿Client component?** → `'use client'` si usa hooks, eventos DOM o estado.
+
+## Convenciones
+
+- Thin routes en `src/app/` importan páginas desde `features/`.
+- Metadata en `src/lib/seo/`.
+- Config de sitio (PayPal, Discord) en env + `features/shop/data/site-config.ts`.

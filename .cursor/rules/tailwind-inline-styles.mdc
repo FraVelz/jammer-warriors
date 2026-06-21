@@ -1,0 +1,21 @@
+---
+description: Estilos jammer-warriors — Tailwind inline, tokens JammerShop
+globs: src/**/*.{tsx,ts,jsx,js}
+alwaysApply: false
+---
+
+# Estilos (jammer-warriors)
+
+- **`globals.css`** — Tailwind v4 + tokens JammerShop (`--color-js-*`).
+- Clases Tailwind **en el JSX** (`className`, `className={cn(...)}`).
+
+## Prohibido
+
+- Archivos que exporten strings de clases para importar en otros archivos.
+- Emojis como iconos (usar `<Icon name="..." />`).
+
+## Permitido
+
+- `cn()` desde `@/lib/cn`.
+- Tokens en `@theme inline` de `globals.css`.
+- `currentColor` en SVG para heredar acentos verdes/rojos.

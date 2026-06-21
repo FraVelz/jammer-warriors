@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jammer Shop – Real Jammers & DIY</title>
+    <style>
+        /* --------------------------------------------
+           RAW, HANDMADE STYLE – NO AI POLISH
+        -------------------------------------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #111;
+            color: #ddd;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        a {
+            color: #88ff88;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            border-bottom: 2px solid #88ff88;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #88ff88;
+            letter-spacing: -1px;
+        }
+
+        .header h1 span {
+            color: #ff6666;
+        }
+
+        .header .tagline {
+            color: #777;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .nav {
+            margin-top: 10px;
+        }
+
+        .nav a {
+            margin-left: 20px;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .nav a:hover {
+            color: #88ff88;
+        }
+
+        .warning {
+            background: #1a0a0a;
+            border: 1px solid #ff4444;
+            padding: 15px;
+            margin-bottom: 40px;
+            color: #ff8888;
+            font-size: 14px;
+        }
+
+        .warning strong {
+            color: #ff4444;
+        }
+
+        /* ORDER INSTRUCTION BOX */
+        .order-instruction {
+            background: #0a1a0a;
+            border: 2px solid #88ff88;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .order-instruction h2 {
+            color: #88ff88;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .order-instruction .paypal-box {
+            background: #1a2a1a;
+            border: 1px solid #88ff88;
+            padding: 15px;
+            margin: 15px auto;
+            display: inline-block;
+            border-radius: 4px;
+        }
+
+        .order-instruction .paypal-box .email {
+            color: #88ff88;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .order-instruction .paypal-box .label {
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .order-instruction .steps {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .order-instruction .step {
+            background: #1a1a1a;
+            padding: 15px 25px;
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            min-width: 150px;
+        }
+
+        .order-instruction .step .num {
+            color: #88ff88;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .order-instruction .step .text {
+            color: #aaa;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .order-instruction .step .text small {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .order-instruction .discord-btn {
+            display: inline-block;
+            background: #5865F2;
+            color: #fff;
+            padding: 14px 40px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            text-decoration: none;
+        }
+
+        .order-instruction .discord-btn:hover {
+            background: #4752c4;
+            text-decoration: none;
+        }
+
+        .order-instruction .note {
+            color: #888;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        .order-instruction .note strong {
+            color: #ff8888;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .product {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            padding: 25px;
+            border-radius: 4px;
+        }
+
+        .product:hover {
+            border-color: #88ff88;
+        }
+
+        .product .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .product h2 {
+            font-size: 20px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .product .price {
+            font-size: 26px;
+            color: #88ff88;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .product .price small {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .product ul {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .product ul li {
+            padding: 5px 0;
+            border-bottom: 1px solid #222;
+            font-size: 14px;
+        }
+
+        .product ul li::before {
+            content: "› ";
+            color: #88ff88;
+        }
+
+        .product .btn {
+            display: inline-block;
+            background: #88ff88;
+            color: #111;
+            padding: 10px 25px;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 2px;
+            margin-top: 10px;
+        }
+
+        .product .btn:hover {
+            background: #66dd66;
+        }
+
+        .delivery-note {
+            background: #1a1a2a;
+            border-left: 4px solid #88ff88;
+            padding: 15px 20px;
+            margin: 30px 0 50px;
+            font-size: 15px;
+        }
+
+        .delivery-note strong {
+            color: #88ff88;
+        }
+
+        .diy-section {
+            border-top: 2px solid #2a2a2a;
+            padding-top: 40px;
+            margin-top: 20px;
+        }
+
+        .diy-section h2 {
+            color: #88ff88;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .diy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .diy-item {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .diy-item h3 {
+            color: #fff;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .diy-item .price {
+            color: #88ff88;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .diy-item .btn-small {
+            display: inline-block;
+            background: #333;
+            color: #ddd;
+            padding: 6px 18px;
+            font-size: 13px;
+            border: 1px solid #444;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 2px;
+        }
+
+        .diy-item .btn-small:hover {
+            background: #444;
+            color: #fff;
+        }
+
+        .footer {
+            border-top: 1px solid #222;
+            margin-top: 60px;
+            padding-top: 30px;
+            font-size: 13px;
+            color: #555;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #88ff88;
+        }
+
+        .footer .legal {
+            color: #444;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+            }
+            .nav a {
+                margin-left: 0;
+                margin-right: 15px;
+            }
+            .products {
+                grid-template-columns: 1fr;
+            }
+            .diy-grid {
+                grid-template-columns: 1fr;
+            }
+            .order-instruction .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            .order-instruction .paypal-box .email {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+    HEADER
+    ========================================== -->
+    <div class="header">
+        <div>
+            <h1>📡 <span>Jammer</span>Shop</h1>
+            <div class="tagline">real devices • real tutorials • no bullshit</div>
+        </div>
+        <div class="nav">
+            <a href="#products">products</a>
+            <a href="#diy">diy</a>
+            <a href="#delivery">delivery</a>
+            <a href="#contact">contact</a>
+        </div>
+    </div>
+
+    <!-- ==========================================
+    WARNING
+    ========================================== -->
+    <div class="warning">
+        <strong>⚡ LEGAL WARNING</strong><br>
+        Jammers may be illegal in your country. You are 100% responsible for your local laws.
+        These are sold for <strong>educational and testing purposes only</strong>.
+    </div>
+
+    <!-- ==========================================
+    ORDER INSTRUCTION – PAYPAL ONLY
+    ========================================== -->
+    <div class="order-instruction" id="order-instruction">
+        <h2>📌 PAYPAL ONLY – SEND PAYMENT</h2>
+        <p style="color:#aaa; margin-bottom:10px;">
+            Send payment via PayPal to the email below.
+        </p>
+
+        <div class="paypal-box">
+            <div class="label">📧 PayPal Email</div>
+            <div class="email">cotsalva3@gmail.com</div>
+        </div>
+
+        <p style="color:#888; font-size:14px; margin:10px 0;">
+            ⚠️ For <strong>other payment methods</strong> (Crypto, Bank Transfer, etc.), open a ticket on Discord.
+        </p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="num">1</div>
+                <div class="text">Send PayPal to<br><strong style="color:#88ff88;">cotsalva3@gmail.com</strong></div>
+            </div>
+            <div class="step">
+                <div class="num">2</div>
+                <div class="text">Join our<br>Discord server</div>
+            </div>
+            <div class="step">
+                <div class="num">3</div>
+                <div class="text">Open a ticket<br>with payment proof <small>(screenshot)</small></div>
+            </div>
+            <div class="step">
+                <div class="num">4</div>
+                <div class="text">Get your product<br>or tutorial</div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+        DISCORD INVITE VARIABLE – EDIT THIS
+        ========================================== -->
+        <!-- 🔽 PASTE YOUR DISCORD SERVER INVITE LINK BELOW 🔽 -->
+        <a href="https://discord.gg/r3GnxdWF" class="discord-btn" target="_blank">💬 JOIN DISCORD & OPEN TICKET</a>
+        <!-- 🔼 REPLACE "https://discord.gg/ve2uCuNg" WITH YOUR ACTUAL INVITE CODE 🔼 -->
+
+        <div class="note">
+            <strong>⚠️ NO TICKET = NO DELIVERY</strong><br>
+            We only process orders through Discord tickets.
+        </div>
+    </div>
+
+    <!-- ==========================================
+    PRODUCTS – PRE-BUILT
+    ========================================== -->
+    <h2 style="color:#88ff88; margin-bottom:20px;">🔌 pre-built jammers (ready to use)</h2>
+
+    <div class="products" id="products">
+
+        <div class="product">
+            <div class="icon">📡</div>
+            <h2>Jammer S1 – Short Range</h2>
+            <div class="price">€20 <small>+ €5 delivery</small></div>
+            <ul>
+                <li>Range: 5–10 meters</li>
+                <li>Battery: 2 hours</li>
+                <li>Frequency: 2.4 GHz</li>
+                <li>Stealth casing</li>
+                <li>Plug & play</li>
+            </ul>
+            <button class="btn" onclick="buy('Jammer S1', 20)">buy now</button>
+        </div>
+
+        <div class="product">
+            <div class="icon">⚡</div>
+            <h2>Jammer S2 – Medium Range</h2>
+            <div class="price">€35 <small>+ €5 delivery</small></div>
+            <ul>
+                <li>Range: 10–20 meters</li>
+                <li>Battery: 4 hours</li>
+                <li>Frequency: 2.4 / 5 GHz</li>
+                <li>Rechargeable</li>
+                <li>LED indicator</li>
+            </ul>
+            <button class="btn" onclick="buy('Jammer S2', 35)">buy now</button>
+        </div>
+
+        <div class="product">
+            <div class="icon">🛡️</div>
+            <h2>Jammer S3 – Long Range</h2>
+            <div class="price">€55 <small>+ €5 delivery</small></div>
+            <ul>
+                <li>Range: 20–40 meters</li>
+                <li>Battery: 6 hours</li>
+                <li>Multi-frequency</li>
+                <li>Portable design</li>
+                <li>Includes charger</li>
+            </ul>
+            <button class="btn" onclick="buy('Jammer S3', 55)">buy now</button>
+        </div>
+
+        <div class="product">
+            <div class="icon">🔋</div>
+            <h2>Jammer S4 – Heavy Duty</h2>
+            <div class="price">€85 <small>+ €5 delivery</small></div>
+            <ul>
+                <li>Range: 50+ meters</li>
+                <li>Battery: 10 hours</li>
+                <li>Full spectrum</li>
+                <li>Rugged casing</li>
+                <li>Professional grade</li>
+            </ul>
+            <button class="btn" onclick="buy('Jammer S4', 85)">buy now</button>
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+    DELIVERY NOTE
+    ========================================== -->
+    <div class="delivery-note" id="delivery">
+        <strong>📦 delivery – €5 flat rate</strong><br>
+        All pre-built jammers are shipped within 24 hours.<br>
+        Tracking number provided. Worldwide shipping available.<br>
+        <span style="color:#888; font-size:14px;">(some countries restricted – ask before ordering)</span>
+    </div>
+
+    <!-- ==========================================
+    DIY TUTORIALS
+    ========================================== -->
+    <div class="diy-section" id="diy">
+        <h2>🔧 DIY tutorials – build your own</h2>
+        <p style="color:#888; margin-bottom:20px;">Step-by-step guides, schematics, parts lists. No experience needed.</p>
+
+        <div class="diy-grid">
+
+            <div class="diy-item">
+                <h3>Beginner Jammer</h3>
+                <div class="price">€5</div>
+                <ul style="list-style:none; margin:10px 0; font-size:14px; color:#aaa;">
+                    <li>› parts list</li>
+                    <li>› wiring diagram</li>
+                    <li>› soldering guide</li>
+                </ul>
+                <button class="btn-small" onclick="buyDIY('Beginner Jammer', 5)">get tutorial</button>
+            </div>
+
+            <div class="diy-item">
+                <h3>Advanced Frequency Tuner</h3>
+                <div class="price">€10</div>
+                <ul style="list-style:none; margin:10px 0; font-size:14px; color:#aaa;">
+                    <li>› full schematics</li>
+                    <li>› PCB layout</li>
+                    <li>› tuning guide</li>
+                </ul>
+                <button class="btn-small" onclick="buyDIY('Advanced Frequency Tuner', 10)">get tutorial</button>
+            </div>
+
+            <div class="diy-item">
+                <h3>Stealth Jammer Build</h3>
+                <div class="price">€12</div>
+                <ul style="list-style:none; margin:10px 0; font-size:14px; color:#aaa;">
+                    <li>› compact design</li>
+                    <li>› battery mods</li>
+                    <li>› stealth casing</li>
+                </ul>
+                <button class="btn-small" onclick="buyDIY('Stealth Jammer Build', 12)">get tutorial</button>
+            </div>
+
+            <div class="diy-item">
+                <h3>Full DIY Bundle</h3>
+                <div class="price">€20</div>
+                <ul style="list-style:none; margin:10px 0; font-size:14px; color:#aaa;">
+                    <li>› all 3 tutorials</li>
+                    <li>› bonus: test guide</li>
+                    <li>› lifetime updates</li>
+                </ul>
+                <button class="btn-small" onclick="buyDIY('Full DIY Bundle', 20)">get bundle</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================
+    CONTACT / DISCORD
+    ========================================== -->
+    <div id="contact" style="margin-top:50px; padding:25px; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:4px;">
+        <p style="color:#aaa; font-size:15px;">
+            💬 questions? orders? support?<br>
+            join our <a href="#" style="color:#88ff88;">Discord server</a> – we reply within hours.
+        </p>
+        <p style="color:#666; font-size:13px; margin-top:10px;">
+            📧 PayPal: <strong style="color:#88ff88;">cotsalva3@gmail.com</strong>
+        </p>
+    </div>
+
+    <!-- ==========================================
+    FOOTER
+    ========================================== -->
+    <div class="footer">
+        <p>© 2026 JammerShop – real devices, real tutorials</p>
+        <p class="legal">
+            ⚠️ for educational & testing use only.<br>
+            you are solely responsible for compliance with local laws.
+        </p>
+        <p style="margin-top:10px;">
+            <a href="#">privacy</a> &middot; <a href="#">terms</a> &middot; <a href="#">refunds</a>
+        </p>
+    </div>
+
+    <!-- ==========================================
+    JAVASCRIPT
+    ========================================== -->
+    <script>
+        // ==========================================
+        // DISCORD INVITE VARIABLE – EDIT THIS
+        // ==========================================
+        // 🔽 PASTE YOUR DISCORD SERVER INVITE CODE BELOW 🔽
+        var DISCORD_INVITE = "https://discord.gg/r3GnxdWF";
+        // 🔼 REPLACE "YOUR_INVITE_CODE_HERE" WITH YOUR ACTUAL INVITE CODE 🔼
+
+        // Full invite link
+        var DISCORD_LINK = "https://discord.gg/ve2uCuNg";
+
+        // Update all Discord buttons with the invite link
+        document.addEventListener('DOMContentLoaded', function() {
+            var buttons = document.querySelectorAll('.discord-btn');
+            buttons.forEach(function(btn) {
+                btn.href = DISCORD_LINK;
+            });
+        });
+
+        // Buy pre-built
+        function buy(product, price) {
+            const total = price + 5;
+            alert(
+                "📦 " + product + "\n" +
+                "Price: €" + price + "\n" +
+                "Delivery: €5\n" +
+                "TOTAL: €" + total + "\n\n" +
+                "🔴 PAYPAL ONLY:\n" +
+                "Send €" + total + " to:\n" +
+                "📧 cotsalva3@gmail.com\n\n" +
+                "🔴 AFTER PAYMENT:\n" +
+                "1. Join our Discord: " + DISCORD_LINK + "\n" +
+                "2. Open a ticket\n" +
+                "3. Send your payment proof (screenshot)\n" +
+                "4. We ship within 24h\n\n" +
+                "⚠️ NO TICKET = NO DELIVERY\n" +
+                "⚠️ For other payment methods, open a ticket."
+            );
+            document.getElementById('order-instruction').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Buy DIY tutorial
+        function buyDIY(tutorial, price) {
+            alert(
+                "🔧 " + tutorial + "\n" +
+                "Price: €" + price + "\n\n" +
+                "🔴 PAYPAL ONLY:\n" +
+                "Send €" + price + " to:\n" +
+                "📧 cotsalva3@gmail.com\n\n" +
+                "🔴 AFTER PAYMENT:\n" +
+                "1. Join our Discord: " + DISCORD_LINK + "\n" +
+                "2. Open a ticket\n" +
+                "3. Send your payment proof (screenshot)\n" +
+                "4. We send the tutorial within minutes\n\n" +
+                "⚠️ NO TICKET = NO TUTORIAL\n" +
+                "⚠️ For other payment methods, open a ticket."
+            );
+            document.getElementById('order-instruction').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        console.log("📡 JammerShop loaded.");
+        console.log("📧 PayPal: cotsalva3@gmail.com");
+        console.log("🔗 Discord: " + DISCORD_LINK);
+        console.log("🔴 After payment → open ticket on Discord.");
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+---
+description: Fuentes de información y mapa del repo jammer-warriors
+alwaysApply: true
+---
+
+# Fuentes de información (jammer-warriors)
+
+App **Next.js 16** (App Router) — tienda JammerShop (jammers + tutoriales DIY). Respuesta al usuario en **español**; commits en **inglés**.
+
+## Stack
+
+| Capa | Tecnología |
+| :--- | :--- |
+| Framework | Next.js 16 |
+| UI | React 19, TypeScript |
+| Estilos | Tailwind CSS v4 (`src/app/globals.css`) |
+| Iconos | Lucide SVG vendoreados en `src/components/icons/svg/` (icons0 MCP) |
+| Alias | `@/*` → `src/*` |
+
+## Mapa del repositorio
+
+| Qué | Dónde |
+| :--- | :--- |
+| Rutas y layouts | `src/app/` |
+| Tienda | `src/features/shop/` |
+| Legal | `src/features/legal/` |
+| Iconos | `src/components/icons/` |
+| Utilidades | `src/lib/` |
+| Reglas del agente | `.cursor/rules/` |
+
+## Qué evitar
+
+- Emojis en UI (usar `<Icon />` SVG).
+- Commitear `.env` o `.env.local`.
+- Paquete `lucide-react` (SVG ya vendoreados).
