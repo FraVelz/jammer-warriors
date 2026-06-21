@@ -11,6 +11,54 @@ When creating or amending commits on behalf of the user:
 
 - **Never** add `Co-authored-by:`, `Signed-off-by:` for Cursor, Claude, or any AI/IDE co-author line unless the user explicitly asks for it.
 - The commit message must contain only what the user requested (Conventional Commits subject/body, etc.).
-- **Cursor injects** `Co-authored-by: Cursor` after `git commit` and `git commit --amend`. Use `git commit-tree` to strip it before push if needed.
+- **Cursor injects** `Co-authored-by: Cursor <cursoragent@cursor.com>` after `git commit` and `git commit --amend` (not a repo hook). Rules alone cannot prevent it; the agent must strip it before push.
+
+## Preferred: `git commit-tree` (evita co-autor Cursor)
+
+```bash
+git add <paths>
+cat > /tmp/commit-msg.txt <<'EOF'
+feat(shop): short subject in English
+
+EOF
+TREE=$(git write-tree)
+PARENT=$(git rev-parse HEAD)
+NEW=$(git commit-tree "$TREE" -p "$PARENT" -F /tmp/commit-msg.txt)
+git reset --hard "$NEW"
+git log -1 --format=%B   # must NOT contain Co-authored-by
+```
+
+## Reescribir historial sin co-autor (varios commits)
+
+Rebuild oldest → newest:
+
+```bash
+PARENT=""
+for COMMIT in $(git log --reverse --format=%H); do
+  TREE=$(git rev-parse "${COMMIT}^{tree}")
+  git log -1 --format=%B "$COMMIT" | sed '/^Co-authored-by:/d' > /tmp/msg.txt
+  if [ -z "$PARENT" ]; then
+    NEW=$(git commit-tree "$TREE" -F /tmp/msg.txt)
+  else
+    NEW=$(git commit-tree "$TREE" -p "$PARENT" -F /tmp/msg.txt)
+  fi
+  PARENT=$NEW
+done
+git reset --hard "$PARENT"
+```
+
+Verify: `git log --format=%B | rg Co-authored` (expect no matches).
+
+## If `git commit` was used anyway
+
+- `git commit --amend -F msg.txt` is **not enough** in Cursor (trailer re-injected).
+- Rewrite the last commit only:
+
+```bash
+TREE=$(git rev-parse 'HEAD^{tree}')
+PARENT=$(git rev-parse 'HEAD^')
+NEW=$(git commit-tree "$TREE" -p "$PARENT" -F /tmp/commit-msg.txt)
+git reset --hard "$NEW"
+```
 
 Detalle de scopes y tipos: `.cursor/commands/auto-commit.md`

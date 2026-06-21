@@ -49,6 +49,27 @@ En paralelo:
 
 ## Crear el commit
 
+**No usar `git commit` directamente** si Cursor puede inyectar `Co-authored-by: Cursor`. Preferir `git commit-tree`:
+
+```bash
+# 1. Stage changes
+git add <paths>
+
+# 2. Write message (subject only, no Co-authored-by)
+cat > /tmp/commit-msg.txt <<'EOF'
+feat(shop): improve responsive layout and add 404 page
+EOF
+
+# 3. Commit without AI co-author trailer
+TREE=$(git write-tree)
+PARENT=$(git rev-parse HEAD)
+NEW=$(git commit-tree "$TREE" -p "$PARENT" -F /tmp/commit-msg.txt)
+git reset --hard "$NEW"
+git log -1 --format=%B
+```
+
+Solo si `git commit-tree` no aplica (commit vacío, etc.), usar:
+
 ```bash
 git commit -m "$(cat <<'EOF'
 feat(shop): migrate shop sections with SVG icons
@@ -57,8 +78,16 @@ EOF
 )"
 ```
 
+y **verificar** con `git log -1 --format=%B`. Si aparece `Co-authored-by: Cursor`, reescribir ese commit con `commit-tree` antes de `git push`.
+
+## Co-autor Cursor — prohibido
+
+- **Nunca** incluir `Co-authored-by: Cursor` ni ningún trailer de IA/IDE.
+- **Nunca** usar `--trailer "Co-authored-by:..."`.
+- Antes de `git push`, comprobar: `git log -10 --format=%B | rg Co-authored` (debe no devolver nada).
+- Si el historial remoto ya tiene esos trailers, reescribir con `commit-tree` (oldest→newest) y `git push -f` solo cuando el usuario lo pida.
+
 - Si un hook rechaza: corregir y **nuevo** commit; no `--no-verify` salvo petición explícita.
-- Sin `Co-authored-by:` de IA (ver `.cursor/rules/git-commits.mdc`).
 
 ## Verificación sugerida
 
@@ -71,4 +100,4 @@ pnpm run build
 
 - Diff + log antes de redactar.
 - Mensaje en **inglés**; respuesta al usuario en **español**.
-- Sin trailers de coautoría de IA.
+- **Prohibido** `Co-authored-by: Cursor` o cualquier co-autor de IA — usar `git commit-tree`, no confiar en `git commit --amend`.
