@@ -20,10 +20,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "bg-js-bg text-js-text min-h-screen antialiased",
+          "bg-js-bg text-js-text relative min-h-screen antialiased",
           "px-5 py-5 leading-relaxed",
         )}
       >
+        <a href="#main-content" className="js-skip-link">
+          Skip to main content
+        </a>
         {children}
         <Analytics />
       </body>

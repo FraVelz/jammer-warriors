@@ -133,7 +133,7 @@ function PurchaseModalContent({
           </li>
         </ol>
 
-        <p className="text-js-danger-soft flex items-start gap-2">
+        <p className="text-js-danger-soft flex items-start gap-1">
           <Icon name="triangle-alert" size={16} className="mt-0.5 shrink-0" />
           <span>
             NO TICKET = NO {isProduct ? "DELIVERY" : "TUTORIAL"}

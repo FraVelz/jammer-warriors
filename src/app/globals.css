@@ -10,12 +10,12 @@
   --color-js-border-subtle: #222222;
   --color-js-text: #dddddd;
   --color-js-text-muted: #aaaaaa;
-  --color-js-text-dim: #888888;
-  --color-js-text-faint: #666666;
+  --color-js-text-dim: #9a9a9a;
+  --color-js-text-faint: #999999;
   --color-js-text-nav: #aaaaaa;
-  --color-js-text-tagline: #888888;
-  --color-js-text-footer: #666666;
-  --color-js-text-footer-dim: #666666;
+  --color-js-text-tagline: #9a9a9a;
+  --color-js-text-footer: #999999;
+  --color-js-text-footer-dim: #999999;
   --color-js-accent: #88ff88;
   --color-js-accent-hover: #66dd66;
   --color-js-danger: #ff4444;
@@ -103,6 +103,7 @@ body {
     left: 50%;
     top: 50%;
     z-index: 0;
+    pointer-events: none;
     width: 160%;
     aspect-ratio: 1;
     opacity: 0;
@@ -287,5 +288,13 @@ body {
 
   .js-footer-note {
     @apply text-js-text-footer-dim mt-2 flex items-center justify-center gap-2 text-xs;
+  }
+
+  .js-skip-link {
+    @apply bg-js-accent text-js-bg absolute top-4 left-4 z-[100] -translate-y-[200%] rounded-sm px-4 py-2.5 text-sm font-bold no-underline transition-transform;
+  }
+
+  .js-skip-link:focus-visible {
+    transform: translateY(0);
   }
 }

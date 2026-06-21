@@ -7,41 +7,48 @@ export function ShopJsonLd() {
   const base = getSiteUrl();
   const { deliveryFee } = getSiteConfig();
   const catalogUrl = `${base}/#products`;
-  const diyUrl = `${base}/#diy`;
 
-  const productItems = PRODUCTS.map((product, index) => ({
-    "@type": "ListItem" as const,
-    position: index + 1,
-    item: {
-      "@type": "Product" as const,
-      name: product.name,
-      url: catalogUrl,
-      offers: {
-        "@type": "Offer" as const,
-        price: product.price + deliveryFee,
-        priceCurrency: "EUR",
-        availability: "https://schema.org/InStock",
-        url: catalogUrl,
-      },
-    },
-  }));
+  const productItems = PRODUCTS.map((product, index) => {
+    const productUrl = `${base}/#product-${product.id}`;
 
-  const tutorialItems = DIY_TUTORIALS.map((tutorial, index) => ({
-    "@type": "ListItem" as const,
-    position: PRODUCTS.length + index + 1,
-    item: {
-      "@type": "Product" as const,
-      name: tutorial.name,
-      url: diyUrl,
-      offers: {
-        "@type": "Offer" as const,
-        price: tutorial.price,
-        priceCurrency: "EUR",
-        availability: "https://schema.org/InStock",
-        url: diyUrl,
+    return {
+      "@type": "ListItem" as const,
+      position: index + 1,
+      item: {
+        "@type": "Product" as const,
+        name: product.name,
+        url: productUrl,
+        offers: {
+          "@type": "Offer" as const,
+          price: product.price + deliveryFee,
+          priceCurrency: "EUR",
+          availability: "https://schema.org/InStock",
+          url: productUrl,
+        },
       },
-    },
-  }));
+    };
+  });
+
+  const tutorialItems = DIY_TUTORIALS.map((tutorial, index) => {
+    const tutorialUrl = `${base}/#diy-${tutorial.id}`;
+
+    return {
+      "@type": "ListItem" as const,
+      position: PRODUCTS.length + index + 1,
+      item: {
+        "@type": "Product" as const,
+        name: tutorial.name,
+        url: tutorialUrl,
+        offers: {
+          "@type": "Offer" as const,
+          price: tutorial.price,
+          priceCurrency: "EUR",
+          availability: "https://schema.org/InStock",
+          url: tutorialUrl,
+        },
+      },
+    };
+  });
 
   const jsonLd = {
     "@context": "https://schema.org",

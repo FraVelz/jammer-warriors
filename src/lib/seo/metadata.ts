@@ -43,6 +43,7 @@ export function generateShopMetadata(): Metadata {
   return {
     title: DEFAULT_TITLE,
     description: SHOP_DESCRIPTION,
+    alternates: { canonical: "/" },
     openGraph: {
       ...sharedOpenGraph(),
       title: DEFAULT_TITLE,

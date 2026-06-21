@@ -72,7 +72,7 @@ Copy from [`.env.example`](./.env.example) as a starting point.
 ## Security & dependencies
 
 - Production responses include security headers (CSP, HSTS, `X-Frame-Options`, etc.) via [`next.config.ts`](./next.config.ts).
-- Run `pnpm audit` periodically. A moderate PostCSS advisory may appear via `next` (`next>postcss@8.4.31`); it is bundled inside Next.js and is mitigated when upstream releases a patched version — overrides in this repo do not replace that copy.
+- Run `pnpm audit` periodically. PostCSS is pinned to `8.5.15` via `overrides` in [`pnpm-workspace.yaml`](./pnpm-workspace.yaml) (pnpm v11+ reads overrides there, not in `package.json`).
 - PayPal amounts are shown client-side only (manual checkout); verify payments against Discord tickets operationally.
 
 See [ICONS.md](./ICONS.md) for icon attribution.

@@ -11,7 +11,7 @@ type ProductGridProps = {
 
 export function ProductGrid({ products, onBuy }: ProductGridProps) {
   return (
-    <div id="products" className={cn("js-shop-grid", "mb-12 sm:mb-14")}>
+    <div className={cn("js-shop-grid")}>
       {products.map((product) => (
         <ProductCard key={product.id} product={product} onBuy={onBuy} />
       ))}

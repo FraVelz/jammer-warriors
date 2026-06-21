@@ -7,4 +7,6 @@ minimumReleaseAgeExclude:
   - "@tailwindcss/oxide"
   - "@tailwindcss/oxide-linux-x64-gnu"
   - "@tailwindcss/oxide-linux-x64-musl"
+overrides:
+  postcss: "8.5.15"
 trustPolicy: no-downgrade

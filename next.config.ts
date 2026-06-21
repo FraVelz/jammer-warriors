@@ -1,6 +1,18 @@
 import type { NextConfig } from "next";
 
-const baseSecurityHeaders = [
+const productionCsp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' blob: data:",
+  "font-src 'self'",
+  "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join("; ");
+
+const sharedSecurityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -8,29 +20,17 @@ const baseSecurityHeaders = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=()",
   },
-  {
-    key: "Content-Security-Policy",
-    value: [
-      "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' blob: data:",
-      "font-src 'self'",
-      "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com",
-      "frame-ancestors 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-    ].join("; "),
-  },
 ];
 
 function securityHeaders() {
+  // Webpack dev (eval source maps + HMR) needs relaxed CSP; strict CSP is prod-only.
   if (process.env.NODE_ENV !== "production") {
-    return baseSecurityHeaders;
+    return sharedSecurityHeaders;
   }
 
   return [
-    ...baseSecurityHeaders,
+    ...sharedSecurityHeaders,
+    { key: "Content-Security-Policy", value: productionCsp },
     {
       key: "Strict-Transport-Security",
       value: "max-age=63072000; includeSubDomains; preload",

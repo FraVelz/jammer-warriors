@@ -2,12 +2,17 @@ import type { Metadata } from "next";
 
 const SITE_NAME = "JammerShop";
 
-function legalPageMetadata(title: string, description: string): Metadata {
+function legalPageMetadata(
+  title: string,
+  description: string,
+  path: `/${string}`,
+): Metadata {
   const ogTitle = `${title} – ${SITE_NAME}`;
 
   return {
     title,
     description,
+    alternates: { canonical: path },
     openGraph: {
       type: "website",
       locale: "en_US",
@@ -27,6 +32,7 @@ export function generatePrivacyMetadata(): Metadata {
   return legalPageMetadata(
     "Privacy Policy",
     "How JammerShop handles your data when you order via PayPal and Discord.",
+    "/privacy",
   );
 }
 
@@ -34,6 +40,7 @@ export function generateTermsMetadata(): Metadata {
   return legalPageMetadata(
     "Terms of Sale & Use",
     "Terms for purchasing jammers and DIY tutorials from JammerShop.",
+    "/terms",
   );
 }
 
@@ -41,5 +48,6 @@ export function generateRefundsMetadata(): Metadata {
   return legalPageMetadata(
     "Refund Policy",
     "Refund policy for physical jammers and digital DIY tutorials.",
+    "/refunds",
   );
 }

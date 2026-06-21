@@ -15,9 +15,12 @@ export function ProductCard({ product, onBuy }: ProductCardProps) {
   const { deliveryFee } = getSiteConfig();
 
   return (
-    <article className={cn("js-card-interactive js-card-stack", "p-6")}>
+    <article
+      id={`product-${product.id}`}
+      className={cn("js-card-interactive js-card-stack", "p-6")}
+    >
       <Icon name={product.icon} size={40} className="text-js-text mb-2" />
-      <h2 className="text-xl text-white">{product.name}</h2>
+      <h3 className="text-xl text-white">{product.name}</h3>
       <p className="text-js-accent my-2 text-[26px] font-bold">
         €{product.price}{" "}
         <small className="text-js-text-faint text-sm font-normal">

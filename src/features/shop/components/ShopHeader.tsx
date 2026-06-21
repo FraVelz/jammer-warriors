@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/icons/Icon";
 import { cn } from "@/lib/cn";
 
@@ -40,6 +40,11 @@ export function ShopHeader() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
 
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false);
+    queueMicrotask(() => menuButtonRef.current?.focus());
+  }, []);
+
   useEffect(() => {
     if (!menuOpen) return;
 
@@ -60,7 +65,7 @@ export function ShopHeader() {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setMenuOpen(false);
+        closeMenu();
         return;
       }
 
@@ -83,12 +88,7 @@ export function ShopHeader() {
       document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [menuOpen]);
-
-  const closeMenu = () => {
-    setMenuOpen(false);
-    menuButtonRef.current?.focus();
-  };
+  }, [menuOpen, closeMenu]);
 
   return (
     <header className="js-header-shop">

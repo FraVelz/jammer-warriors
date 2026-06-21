@@ -4,7 +4,10 @@ import { Icon } from "@/components/icons/Icon";
 export function ProductsSectionTitle() {
   return (
     <div className="mb-5">
-      <h2 className="text-js-accent flex items-center gap-2">
+      <h2
+        id="products-heading"
+        className="text-js-accent flex items-center gap-2"
+      >
         <Icon name="plug" size={24} />
         pre-built jammers (ready to use)
       </h2>

@@ -33,11 +33,17 @@ export function ShopPage() {
     <PageShell width="shop">
       <ShopHeader />
       <LegalWarning />
-      <ProductsSectionTitle />
-      <ProductGrid products={PRODUCTS} onBuy={openProductPurchase} />
+      <OrderInstructions />
+      <section
+        id="products"
+        aria-labelledby="products-heading"
+        className="mb-12 sm:mb-14"
+      >
+        <ProductsSectionTitle />
+        <ProductGrid products={PRODUCTS} onBuy={openProductPurchase} />
+      </section>
       <DeliveryNote />
       <DiySection tutorials={DIY_TUTORIALS} onBuy={openDiyPurchase} />
-      <OrderInstructions />
       <ContactSection />
       <ShopFooter />
       <PurchaseModal

@@ -27,20 +27,17 @@ export function OrderInstructions() {
         </div>
       </div>
 
-      <p
-        className={cn(
-          "text-js-text-dim mx-auto mb-4 flex max-w-xl items-start justify-center gap-2",
-          "text-sm",
-        )}
-      >
-        <Icon
-          name="triangle-alert"
-          size={16}
-          className="text-js-danger-soft mt-0.5 shrink-0"
-        />
-        <span>
-          For <strong>other payment methods</strong> (Crypto, Bank Transfer,
-          etc.), open a ticket on Discord.
+      <p className={cn("text-js-text-dim mx-auto mb-4 max-w-xl text-sm")}>
+        <span className="inline-flex items-start gap-1">
+          <Icon
+            name="triangle-alert"
+            size={16}
+            className="text-js-danger-soft mt-0.5 shrink-0"
+          />
+          <span className="text-left">
+            For <strong>other payment methods</strong> (Crypto, Bank Transfer,
+            etc.), open a ticket on Discord.
+          </span>
         </span>
       </p>
 
@@ -101,14 +98,20 @@ export function OrderInstructions() {
         JOIN DISCORD & OPEN TICKET
       </a>
 
-      <p className="text-js-text-dim mt-4 flex items-center justify-center gap-2 text-sm">
-        <Icon name="triangle-alert" size={16} className="text-js-danger-soft" />
-        <span>
-          <strong className="text-js-danger-soft">
-            NO TICKET = NO DELIVERY
-          </strong>
-          <br />
-          We only process orders through Discord tickets.
+      <p className="text-js-text-dim mt-4 text-sm">
+        <span className="inline-flex items-start gap-1">
+          <Icon
+            name="triangle-alert"
+            size={16}
+            className="text-js-danger-soft mt-0.5 shrink-0"
+          />
+          <span className="text-left">
+            <strong className="text-js-danger-soft">
+              NO TICKET = NO DELIVERY
+            </strong>
+            <br />
+            We only process orders through Discord tickets.
+          </span>
         </span>
       </p>
     </section>

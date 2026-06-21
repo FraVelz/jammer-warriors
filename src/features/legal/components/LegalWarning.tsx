@@ -2,7 +2,7 @@ import { Icon } from "@/components/icons/Icon";
 
 export function LegalWarning() {
   return (
-    <div className="js-legal-warning" role="alert">
+    <div className="js-legal-warning" role="region" aria-label="Legal warning">
       <Icon
         name="triangle-alert"
         size={20}

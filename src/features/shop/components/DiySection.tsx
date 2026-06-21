@@ -13,7 +13,10 @@ type DiyCardProps = {
 
 function DiyCard({ tutorial, onBuy }: DiyCardProps) {
   return (
-    <article className={cn("js-card js-card-stack", "p-5")}>
+    <article
+      id={`diy-${tutorial.id}`}
+      className={cn("js-card js-card-stack", "p-5")}
+    >
       <h3 className="text-[17px] text-white">{tutorial.name}</h3>
       <p className="text-js-accent text-lg font-bold">€{tutorial.price}</p>
       <FeatureList items={tutorial.features} className="my-2 flex-1" />

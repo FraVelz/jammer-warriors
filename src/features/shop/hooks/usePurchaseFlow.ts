@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import type { DiyTutorial } from "@/features/shop/data/diy-tutorials";
 import type { Product } from "@/features/shop/data/products";
 import { getSiteConfig } from "@/features/shop/data/site-config";
@@ -10,12 +11,15 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-function scrollToDiscordTicket() {
-  const target = document.getElementById("discord-ticket");
-  target?.scrollIntoView({
+function scrollToOrderInstructions() {
+  const section = document.getElementById("order-instruction");
+  section?.scrollIntoView({
     behavior: prefersReducedMotion() ? "auto" : "smooth",
+    block: "start",
   });
-  target?.focus({ preventScroll: true });
+
+  const discordCta = document.getElementById("discord-ticket");
+  discordCta?.focus({ preventScroll: true });
 }
 
 export function usePurchaseFlow() {
@@ -43,43 +47,55 @@ export function usePurchaseFlow() {
     [restoreTriggerFocus],
   );
 
+  const openPurchase = useCallback(
+    (nextItem: PurchaseItem) => {
+      rememberTrigger();
+      flushSync(() => {
+        setTermsAccepted(false);
+        setItem(nextItem);
+      });
+
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+
+      if (!dialog.open) {
+        dialog.showModal();
+      }
+    },
+    [rememberTrigger],
+  );
+
   const openProductPurchase = useCallback(
     (product: Product) => {
       const { deliveryFee } = getSiteConfig();
-      rememberTrigger();
-      setTermsAccepted(false);
-      setItem({
+      openPurchase({
         kind: "product",
         name: product.name,
         price: product.price,
         total: product.price + deliveryFee,
         includesDelivery: true,
       });
-      queueMicrotask(() => dialogRef.current?.showModal());
     },
-    [rememberTrigger],
+    [openPurchase],
   );
 
   const openDiyPurchase = useCallback(
     (tutorial: DiyTutorial) => {
-      rememberTrigger();
-      setTermsAccepted(false);
-      setItem({
+      openPurchase({
         kind: "diy",
         name: tutorial.name,
         price: tutorial.price,
         total: tutorial.price,
         includesDelivery: false,
       });
-      queueMicrotask(() => dialogRef.current?.showModal());
     },
-    [rememberTrigger],
+    [openPurchase],
   );
 
   const confirmAndScroll = useCallback(() => {
     if (!termsAccepted) return;
     closePurchase({ restoreFocus: false });
-    queueMicrotask(() => scrollToDiscordTicket());
+    queueMicrotask(() => scrollToOrderInstructions());
   }, [termsAccepted, closePurchase]);
 
   return {
