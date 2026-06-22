@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createCheckoutSession } from "@/features/shop/lib/create-checkout-session";
 import { isStripeConfigured } from "@/lib/env/server-env";
+import {
+  enforceRateLimit,
+  rateLimitHeaders,
+} from "@/lib/rate-limit";
 import type { PurchaseKind } from "@/features/shop/types/purchase";
 
 type CheckoutBody = {
@@ -17,6 +21,19 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { error: "Stripe checkout is not available" },
       { status: 503 },
+    );
+  }
+
+  const rateLimit = await enforceRateLimit(
+    request,
+    "stripe-checkout",
+    10,
+    15 * 60 * 1000,
+  );
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "Too many checkout attempts. Please wait a few minutes." },
+      { status: 429, headers: rateLimitHeaders(rateLimit) },
     );
   }
 
