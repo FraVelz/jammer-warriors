@@ -99,11 +99,13 @@ export function RegisterForm() {
         .json()
         .catch(() => null)) as {
         error?: string;
+        detail?: string;
       } | null;
 
       if (!registerResponse.ok) {
+        const detail = registerData?.detail ? ` (${registerData.detail})` : "";
         throw new Error(
-          registerData?.error ?? "No se pudo crear la cuenta admin",
+          `${registerData?.error ?? "No se pudo crear la cuenta admin"}${detail}`,
         );
       }
 

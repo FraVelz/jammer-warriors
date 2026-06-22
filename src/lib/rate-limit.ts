@@ -12,7 +12,7 @@ function sanitizeRateLimitKey(key: string): string {
   return key.replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 128);
 }
 
-export async function checkRateLimit(
+async function checkRateLimit(
   key: string,
   limit: number,
   windowMs: number,
@@ -21,33 +21,38 @@ export async function checkRateLimit(
     return { allowed: true, retryAfterMs: 0 };
   }
 
-  const db = await getAdminFirestore();
-  const docRef = db.doc(
-    `${RATE_LIMIT_COLLECTION}/${sanitizeRateLimitKey(key)}`,
-  );
-  const now = Date.now();
+  try {
+    const db = await getAdminFirestore();
+    const docRef = db.doc(
+      `${RATE_LIMIT_COLLECTION}/${sanitizeRateLimitKey(key)}`,
+    );
+    const now = Date.now();
 
-  return db.runTransaction(async (tx) => {
-    const snap = await tx.get(docRef);
+    return await db.runTransaction(async (tx) => {
+      const snap = await tx.get(docRef);
 
-    if (!snap.exists) {
-      tx.set(docRef, { count: 1, resetAt: now + windowMs });
+      if (!snap.exists) {
+        tx.set(docRef, { count: 1, resetAt: now + windowMs });
+        return { allowed: true, retryAfterMs: 0 };
+      }
+
+      const data = snap.data() as { count: number; resetAt: number };
+      if (data.resetAt <= now) {
+        tx.set(docRef, { count: 1, resetAt: now + windowMs });
+        return { allowed: true, retryAfterMs: 0 };
+      }
+
+      if (data.count >= limit) {
+        return { allowed: false, retryAfterMs: data.resetAt - now };
+      }
+
+      tx.update(docRef, { count: data.count + 1 });
       return { allowed: true, retryAfterMs: 0 };
-    }
-
-    const data = snap.data() as { count: number; resetAt: number };
-    if (data.resetAt <= now) {
-      tx.set(docRef, { count: 1, resetAt: now + windowMs });
-      return { allowed: true, retryAfterMs: 0 };
-    }
-
-    if (data.count >= limit) {
-      return { allowed: false, retryAfterMs: data.resetAt - now };
-    }
-
-    tx.update(docRef, { count: data.count + 1 });
+    });
+  } catch {
+    // Do not block admin setup if Firestore rate-limit writes fail.
     return { allowed: true, retryAfterMs: 0 };
-  });
+  }
 }
 
 export function getClientIp(request: Request): string {

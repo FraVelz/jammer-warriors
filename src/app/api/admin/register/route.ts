@@ -15,6 +15,28 @@ type RegisterBody = {
   password?: string;
 };
 
+function mapAuthRegisterError(error: unknown): string {
+  const message = error instanceof Error ? error.message : "create_user_failed";
+  const code =
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    typeof error.code === "string"
+      ? error.code
+      : "";
+
+  if (
+    code === "auth/configuration-not-found" ||
+    message.includes(
+      "no configuration corresponding to the provided identifier",
+    )
+  ) {
+    return "Firebase Authentication no está activado en el proyecto. En Firebase Console → Authentication, pulsa «Comenzar» y activa Email/Password.";
+  }
+
+  return message;
+}
+
 export async function POST(request: Request) {
   try {
     if (!isFirebaseAdminConfigured()) {
@@ -91,8 +113,7 @@ export async function POST(request: Request) {
         );
       }
 
-      const detail =
-        error instanceof Error ? error.message : "create_user_failed";
+      const detail = mapAuthRegisterError(error);
       return NextResponse.json(
         { error: "No se pudo crear la cuenta", detail },
         { status: 500 },
