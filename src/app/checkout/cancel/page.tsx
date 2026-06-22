@@ -1,11 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/icons/Icon";
 import { PageShell } from "@/components/layout/PageShell";
-import { generateShopMetadata } from "@/lib/seo/metadata";
 
-export const metadata = {
-  ...generateShopMetadata(),
+export const metadata: Metadata = {
   title: "Payment cancelled",
+  description: "Your Stripe checkout was cancelled. No charge was made.",
   robots: { index: false, follow: false },
 };
 
