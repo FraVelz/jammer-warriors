@@ -17,23 +17,31 @@ import { PurchaseModal } from "@/features/shop/components/PurchaseModal";
 import { ShopHeader } from "@/features/shop/components/ShopHeader";
 import { usePurchaseFlow } from "@/features/shop/hooks/usePurchaseFlow";
 
-export function ShopPage() {
+type ShopPageProps = {
+  stripeEnabled: boolean;
+};
+
+export function ShopPage({ stripeEnabled }: ShopPageProps) {
   const {
     dialogRef,
     item,
     termsAccepted,
     setTermsAccepted,
+    paymentMethod,
+    setPaymentMethod,
+    stripeLoading,
+    stripeError,
     openProductPurchase,
     openDiyPurchase,
     closePurchase,
-    confirmAndScroll,
+    handleConfirm,
   } = usePurchaseFlow();
 
   return (
     <PageShell width="shop">
       <ShopHeader />
       <LegalWarning />
-      <OrderInstructions />
+      <OrderInstructions stripeEnabled={stripeEnabled} />
       <section
         id="products"
         aria-labelledby="products-heading"
@@ -44,15 +52,20 @@ export function ShopPage() {
       </section>
       <DeliveryNote />
       <DiySection tutorials={DIY_TUTORIALS} onBuy={openDiyPurchase} />
-      <ContactSection />
+      <ContactSection stripeEnabled={stripeEnabled} />
       <ShopFooter />
       <PurchaseModal
         dialogRef={dialogRef}
         item={item}
         termsAccepted={termsAccepted}
         onTermsChange={setTermsAccepted}
+        paymentMethod={paymentMethod}
+        onPaymentMethodChange={setPaymentMethod}
+        stripeEnabled={stripeEnabled}
+        stripeLoading={stripeLoading}
+        stripeError={stripeError}
         onClose={closePurchase}
-        onConfirm={confirmAndScroll}
+        onConfirm={handleConfirm}
       />
     </PageShell>
   );

@@ -4,27 +4,51 @@ import { getSiteConfig } from "@/features/shop/data/site-config";
 
 const STEPS = [{ num: "1" }, { num: "2" }, { num: "3" }, { num: "4" }] as const;
 
-export function OrderInstructions() {
+type OrderInstructionsProps = {
+  stripeEnabled: boolean;
+};
+
+export function OrderInstructions({ stripeEnabled }: OrderInstructionsProps) {
   const { paypalEmail, discordInvite } = getSiteConfig();
 
   return (
     <section id="order-instruction" className="js-order-section">
       <h2 className="text-js-accent mb-2 flex items-center justify-center gap-2 text-[22px]">
         <Icon name="pin" size={22} />
-        PAYPAL ONLY – SEND PAYMENT
+        CHOOSE YOUR PAYMENT METHOD
       </h2>
-      <p className="text-js-text-muted mb-2">
-        Send payment via PayPal to the email below.
+      <p className="text-js-text-muted mb-4">
+        Pay with PayPal (manual transfer) or Stripe (card at checkout). Then
+        open a Discord ticket to receive your order.
       </p>
 
-      <div className="js-order-email-box">
-        <div className="js-order-email-label">
-          <Icon name="mail" size={14} />
-          PayPal Email
+      <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="js-order-email-box">
+          <div className="js-order-email-label">
+            <Icon name="mail" size={14} />
+            PayPal
+          </div>
+          <p className="text-js-text-muted mb-2 text-sm">
+            Send payment to this email:
+          </p>
+          <div className="text-js-accent text-xl font-bold tracking-wide max-sm:text-lg">
+            {paypalEmail}
+          </div>
         </div>
-        <div className="text-js-accent text-2xl font-bold tracking-wide max-sm:text-lg">
-          {paypalEmail}
-        </div>
+
+        {stripeEnabled && (
+          <div className="js-order-email-box">
+            <div className="js-order-email-label">
+              <Icon name="plug" size={14} />
+              Stripe
+            </div>
+            <p className="text-js-text-muted text-sm">
+              Select <strong className="text-js-accent">Stripe (card)</strong>{" "}
+              when you click Buy on any product or tutorial. You will be
+              redirected to secure checkout.
+            </p>
+          </div>
+        )}
       </div>
 
       <p className={cn("text-js-text-dim mx-auto mb-4 max-w-xl text-sm")}>
@@ -35,7 +59,7 @@ export function OrderInstructions() {
             className="text-js-danger-soft mt-0.5 shrink-0"
           />
           <span className="text-left">
-            For <strong>other payment methods</strong> (Crypto, Bank Transfer,
+            For <strong>other payment methods</strong> (crypto, bank transfer,
             etc.), open a ticket on Discord.
           </span>
         </span>
@@ -48,9 +72,17 @@ export function OrderInstructions() {
             <div className="text-js-text-muted mt-1 text-sm">
               {step.num === "1" && (
                 <>
-                  Send PayPal to
+                  Pay via PayPal to
                   <br />
                   <strong className="text-js-accent">{paypalEmail}</strong>
+                  {stripeEnabled && (
+                    <>
+                      <br />
+                      <span className="text-js-text-faint">
+                        or Stripe at checkout
+                      </span>
+                    </>
+                  )}
                 </>
               )}
               {step.num === "2" && (
@@ -71,8 +103,14 @@ export function OrderInstructions() {
                 <>
                   Open a ticket
                   <br />
-                  with payment proof{" "}
+                  with PayPal proof{" "}
                   <small className="text-js-text-faint">(screenshot)</small>
+                  {stripeEnabled && (
+                    <>
+                      <br />
+                      or Stripe Session ID
+                    </>
+                  )}
                 </>
               )}
               {step.num === "4" && (

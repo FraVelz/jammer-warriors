@@ -60,8 +60,10 @@ export const TERMS_DOCUMENT: LegalDocument = {
       id: "ordering",
       title: "Ordering process",
       paragraphs: [
-        "Orders are placed by sending payment via PayPal to the email listed on the site, then " +
-          "opening a ticket on our Discord server with payment proof.",
+        "Orders may be placed by sending payment via PayPal to the email listed on the site, or " +
+          "by completing Stripe Checkout when selecting Stripe at purchase.",
+        "After payment, you must open a ticket on our Discord server with payment proof (PayPal " +
+          "screenshot) or your Stripe Session ID from the success page.",
         "No ticket means no delivery. We do not process orders received only by email or direct " +
           "message without a Discord ticket.",
         "Alternative payment methods (crypto, bank transfer) may be discussed in a Discord " +

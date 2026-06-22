@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Icon } from "@/components/icons/Icon";
 import { getSiteConfig } from "@/features/shop/data/site-config";
 
-export function ContactSection() {
+export function ContactSection({ stripeEnabled }: { stripeEnabled: boolean }) {
   const { paypalEmail, discordInvite } = getSiteConfig();
 
   return (
@@ -27,6 +27,13 @@ export function ContactSection() {
       <p className="text-js-text-faint mt-2 flex items-center gap-2 text-sm">
         <Icon name="mail" size={16} />
         PayPal: <strong className="text-js-accent">{paypalEmail}</strong>
+        {stripeEnabled && (
+          <>
+            {" · "}
+            <Icon name="plug" size={16} />
+            Stripe at checkout
+          </>
+        )}
       </p>
     </section>
   );

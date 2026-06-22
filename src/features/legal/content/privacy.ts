@@ -21,8 +21,11 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
       paragraphs: [
         "When you purchase via PayPal, PayPal processes your payment and may share your name, " +
           "email, and transaction ID with us as the seller.",
+        "When you pay via Stripe Checkout, Stripe processes your card payment and may share your " +
+          "name, email, and payment reference with us. Card details are handled by Stripe and are " +
+          "not stored on our servers.",
         "When you open a Discord ticket, we receive your Discord username, messages, and any " +
-          "payment proof (screenshots) you upload.",
+          "payment proof (screenshots) or Stripe Session IDs you provide.",
         "If Vercel Analytics is enabled on this site, anonymous usage data (pages visited, " +
           "browser type, country) may be collected. We do not use advertising trackers.",
       ],
@@ -40,6 +43,7 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
       title: "Third-party services",
       paragraphs: [
         "PayPal — payment processing. See PayPal's privacy policy at paypal.com.",
+        "Stripe — card payment processing. See Stripe's privacy policy at stripe.com.",
         "Discord — support tickets and delivery coordination. See Discord's privacy policy at " +
           "discord.com.",
         "Vercel — hosting and optional analytics. See vercel.com/legal/privacy-policy.",

@@ -31,7 +31,7 @@ function legalPageMetadata(
 export function generatePrivacyMetadata(): Metadata {
   return legalPageMetadata(
     "Privacy Policy",
-    "How JammerShop handles your data when you order via PayPal and Discord.",
+    "How JammerShop handles your data when you order via PayPal, Stripe, or Discord.",
     "/privacy",
   );
 }

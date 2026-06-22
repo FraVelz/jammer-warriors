@@ -11,6 +11,6 @@ export const contentType = ogImageContentType;
 export default function PrivacyOpenGraphImage() {
   return createLegalOgImageResponse(
     "Privacy Policy",
-    "How JammerShop handles your data when you order via PayPal and Discord.",
+    "How JammerShop handles your data when you order via PayPal, Stripe, or Discord.",
   );
 }

@@ -53,9 +53,9 @@ export const REFUNDS_DOCUMENT: LegalDocument = {
       title: "Refund process",
       paragraphs: [
         "Open or reopen your Discord ticket with the subject REFUND and include your PayPal " +
-          "transaction ID.",
-        "If approved, refunds are issued to the original PayPal account. Processing time depends " +
-          "on PayPal (typically 3–5 business days).",
+          "transaction ID or Stripe Session ID.",
+        "If approved, refunds are issued to the original payment method (PayPal account or card " +
+          "via Stripe). Processing time depends on the provider (typically 3–5 business days).",
       ],
     },
     {

@@ -4,7 +4,7 @@ import { getSiteUrl } from "@/lib/seo/site-url";
 const SITE_NAME = "JammerShop";
 const DEFAULT_TITLE = "Jammer Shop – Real Jammers & DIY";
 const DEFAULT_DESCRIPTION =
-  "Pre-built jammers and DIY tutorials. PayPal orders, Discord ticket delivery. Educational and testing use only.";
+  "Pre-built jammers and DIY tutorials. PayPal or Stripe checkout, Discord ticket delivery. Educational and testing use only.";
 const SHOP_DESCRIPTION =
   "Real devices, real tutorials. Pre-built jammers and step-by-step DIY guides.";
 

@@ -5,7 +5,10 @@ import { flushSync } from "react-dom";
 import type { DiyTutorial } from "@/features/shop/data/diy-tutorials";
 import type { Product } from "@/features/shop/data/products";
 import { getSiteConfig } from "@/features/shop/data/site-config";
-import type { PurchaseItem } from "@/features/shop/types/purchase";
+import type {
+  PaymentMethod,
+  PurchaseItem,
+} from "@/features/shop/types/purchase";
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -27,6 +30,9 @@ export function usePurchaseFlow() {
   const triggerRef = useRef<HTMLElement | null>(null);
   const [item, setItem] = useState<PurchaseItem | null>(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("paypal");
+  const [stripeLoading, setStripeLoading] = useState(false);
+  const [stripeError, setStripeError] = useState<string | null>(null);
 
   const rememberTrigger = useCallback(() => {
     const active = document.activeElement;
@@ -42,6 +48,9 @@ export function usePurchaseFlow() {
       dialogRef.current?.close();
       setItem(null);
       setTermsAccepted(false);
+      setPaymentMethod("paypal");
+      setStripeLoading(false);
+      setStripeError(null);
       if (restoreFocus) restoreTriggerFocus();
     },
     [restoreTriggerFocus],
@@ -52,6 +61,9 @@ export function usePurchaseFlow() {
       rememberTrigger();
       flushSync(() => {
         setTermsAccepted(false);
+        setPaymentMethod("paypal");
+        setStripeLoading(false);
+        setStripeError(null);
         setItem(nextItem);
       });
 
@@ -70,6 +82,7 @@ export function usePurchaseFlow() {
       const { deliveryFee } = getSiteConfig();
       openPurchase({
         kind: "product",
+        skuId: product.id,
         name: product.name,
         price: product.price,
         total: product.price + deliveryFee,
@@ -83,6 +96,7 @@ export function usePurchaseFlow() {
     (tutorial: DiyTutorial) => {
       openPurchase({
         kind: "diy",
+        skuId: tutorial.id,
         name: tutorial.name,
         price: tutorial.price,
         total: tutorial.price,
@@ -93,19 +107,61 @@ export function usePurchaseFlow() {
   );
 
   const confirmAndScroll = useCallback(() => {
-    if (!termsAccepted) return;
+    if (!termsAccepted || paymentMethod !== "paypal") return;
     closePurchase({ restoreFocus: false });
     queueMicrotask(() => scrollToOrderInstructions());
-  }, [termsAccepted, closePurchase]);
+  }, [termsAccepted, paymentMethod, closePurchase]);
+
+  const confirmStripeCheckout = useCallback(async () => {
+    if (!termsAccepted || !item || paymentMethod !== "stripe") return;
+
+    setStripeLoading(true);
+    setStripeError(null);
+
+    try {
+      const response = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind: item.kind, skuId: item.skuId }),
+      });
+
+      const data = (await response.json()) as { url?: string; error?: string };
+
+      if (!response.ok || !data.url) {
+        setStripeError(data.error ?? "Could not start Stripe checkout");
+        setStripeLoading(false);
+        return;
+      }
+
+      window.location.href = data.url;
+    } catch {
+      setStripeError("Network error. Please try again.");
+      setStripeLoading(false);
+    }
+  }, [termsAccepted, item, paymentMethod]);
+
+  const handleConfirm = useCallback(() => {
+    if (paymentMethod === "stripe") {
+      void confirmStripeCheckout();
+      return;
+    }
+    confirmAndScroll();
+  }, [paymentMethod, confirmStripeCheckout, confirmAndScroll]);
 
   return {
     dialogRef,
     item,
     termsAccepted,
     setTermsAccepted,
+    paymentMethod,
+    setPaymentMethod,
+    stripeLoading,
+    stripeError,
     openProductPurchase,
     openDiyPurchase,
     closePurchase,
     confirmAndScroll,
+    confirmStripeCheckout,
+    handleConfirm,
   };
 }
