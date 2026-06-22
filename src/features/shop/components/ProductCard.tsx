@@ -32,6 +32,7 @@ export function ProductCard({ product, onBuy }: ProductCardProps) {
         type="button"
         onClick={() => onBuy(product)}
         className="js-btn-buy"
+        aria-label={`Buy ${product.name} for €${product.price} plus €${deliveryFee} delivery`}
       >
         buy now
       </button>

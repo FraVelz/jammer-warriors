@@ -24,6 +24,7 @@ function DiyCard({ tutorial, onBuy }: DiyCardProps) {
         type="button"
         onClick={() => onBuy(tutorial)}
         className="js-btn-diy"
+        aria-label={`Buy ${tutorial.name} tutorial for €${tutorial.price}`}
       >
         {tutorial.cta}
       </button>
@@ -38,8 +39,11 @@ type DiySectionProps = {
 
 export function DiySection({ tutorials, onBuy }: DiySectionProps) {
   return (
-    <section id="diy" className="border-js-border mt-5 border-t-2 pt-10">
-      <h2 className="text-js-accent mb-5 flex items-center gap-2 text-2xl">
+    <section id="diy" aria-labelledby="diy-heading" className="border-js-border mt-5 border-t-2 pt-10">
+      <h2
+        id="diy-heading"
+        className="text-js-accent mb-5 flex items-center gap-2 text-2xl"
+      >
         <Icon name="wrench" size={24} />
         DIY tutorials – build your own
       </h2>
