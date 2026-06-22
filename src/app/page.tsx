@@ -3,17 +3,19 @@ import { generateShopMetadata } from "@/lib/seo/metadata";
 import { ShopJsonLd } from "@/lib/seo/shop-json-ld";
 import { ShopPage } from "@/features/shop/pages/ShopPage";
 import { isStripeConfigured } from "@/lib/env/server-env";
+import { getDiscordInvite } from "@/lib/site-settings/get-discord-invite";
 
 export const generateMetadata = generateShopMetadata;
 
 export default async function HomePage() {
   await connection();
   const stripeEnabled = isStripeConfigured();
+  const discordInvite = await getDiscordInvite();
 
   return (
     <>
       <ShopJsonLd />
-      <ShopPage stripeEnabled={stripeEnabled} />
+      <ShopPage stripeEnabled={stripeEnabled} discordInvite={discordInvite} />
     </>
   );
 }

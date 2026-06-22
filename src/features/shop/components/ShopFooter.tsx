@@ -2,8 +2,14 @@ import Link from "next/link";
 import { Icon } from "@/components/icons/Icon";
 import { getSiteConfig } from "@/features/shop/data/site-config";
 
-export function ContactSection({ stripeEnabled }: { stripeEnabled: boolean }) {
-  const { paypalEmail, discordInvite } = getSiteConfig();
+export function ContactSection({
+  stripeEnabled,
+  discordInvite,
+}: {
+  stripeEnabled: boolean;
+  discordInvite: string;
+}) {
+  const { paypalEmail } = getSiteConfig();
 
   return (
     <section id="contact" className="js-contact-section">

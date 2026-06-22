@@ -19,6 +19,7 @@ type PurchaseModalProps = {
   stripeEnabled: boolean;
   stripeLoading: boolean;
   stripeError: string | null;
+  discordInvite: string;
   onClose: () => void;
   onConfirm: () => void;
 };
@@ -33,6 +34,7 @@ export function PurchaseModal({
   stripeEnabled,
   stripeLoading,
   stripeError,
+  discordInvite,
   onClose,
   onConfirm,
 }: PurchaseModalProps) {
@@ -58,6 +60,7 @@ export function PurchaseModal({
             stripeEnabled={stripeEnabled}
             stripeLoading={stripeLoading}
             stripeError={stripeError}
+            discordInvite={discordInvite}
             onClose={requestClose}
             onConfirm={onConfirm}
           />
@@ -76,6 +79,7 @@ type PurchaseModalContentProps = {
   stripeEnabled: boolean;
   stripeLoading: boolean;
   stripeError: string | null;
+  discordInvite: string;
   onClose: () => void;
   onConfirm: () => void;
 };
@@ -89,10 +93,11 @@ function PurchaseModalContent({
   stripeEnabled,
   stripeLoading,
   stripeError,
+  discordInvite,
   onClose,
   onConfirm,
 }: PurchaseModalContentProps) {
-  const { paypalEmail, discordInvite, deliveryFee } = getSiteConfig();
+  const { paypalEmail, deliveryFee } = getSiteConfig();
   const isProduct = item.kind === "product";
   const isPaypal = paymentMethod === "paypal";
 

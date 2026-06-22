@@ -19,9 +19,10 @@ import { usePurchaseFlow } from "@/features/shop/hooks/usePurchaseFlow";
 
 type ShopPageProps = {
   stripeEnabled: boolean;
+  discordInvite: string;
 };
 
-export function ShopPage({ stripeEnabled }: ShopPageProps) {
+export function ShopPage({ stripeEnabled, discordInvite }: ShopPageProps) {
   const {
     dialogRef,
     item,
@@ -41,7 +42,10 @@ export function ShopPage({ stripeEnabled }: ShopPageProps) {
     <PageShell width="shop">
       <ShopHeader />
       <LegalWarning />
-      <OrderInstructions stripeEnabled={stripeEnabled} />
+      <OrderInstructions
+        stripeEnabled={stripeEnabled}
+        discordInvite={discordInvite}
+      />
       <section
         id="products"
         aria-labelledby="products-heading"
@@ -52,7 +56,10 @@ export function ShopPage({ stripeEnabled }: ShopPageProps) {
       </section>
       <DeliveryNote />
       <DiySection tutorials={DIY_TUTORIALS} onBuy={openDiyPurchase} />
-      <ContactSection stripeEnabled={stripeEnabled} />
+      <ContactSection
+        stripeEnabled={stripeEnabled}
+        discordInvite={discordInvite}
+      />
       <ShopFooter />
       <PurchaseModal
         dialogRef={dialogRef}
@@ -64,6 +71,7 @@ export function ShopPage({ stripeEnabled }: ShopPageProps) {
         stripeEnabled={stripeEnabled}
         stripeLoading={stripeLoading}
         stripeError={stripeError}
+        discordInvite={discordInvite}
         onClose={closePurchase}
         onConfirm={handleConfirm}
       />

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/cn";
 import { getFirebaseAuth } from "@/lib/firebase/client";
 import { GoogleSignInButton } from "@/features/admin/components/GoogleSignInButton";
 
@@ -26,6 +27,13 @@ export function RegisterForm() {
     async function loadStatus() {
       try {
         const response = await fetch("/api/admin/setup-status");
+        if (!response.ok) {
+          if (!cancelled) {
+            setStatus({ canRegister: false, configured: false });
+          }
+          return;
+        }
+
         const data = (await response.json()) as SetupStatus;
         if (!cancelled) setStatus(data);
       } catch {
@@ -42,7 +50,14 @@ export function RegisterForm() {
   }, []);
 
   const canRegister = status?.canRegister ?? false;
+  const adminAlreadyExists =
+    status?.configured === true && status.canRegister === false;
+  const setupUnavailable = status !== null && status.configured === false;
+  const showBlockedBanner = adminAlreadyExists || setupUnavailable;
   const isDisabled = loading || !canRegister || status === null;
+  const blockedControlClass = showBlockedBanner
+    ? "disabled:cursor-not-allowed"
+    : undefined;
 
   async function completeRegistration(idToken: string) {
     const sessionResponse = await fetch("/api/admin/session", {
@@ -67,7 +82,7 @@ export function RegisterForm() {
     event.preventDefault();
     setError(null);
 
-    if (!canRegister) {
+    if (adminAlreadyExists) {
       setError("Ya existe una cuenta admin. Solo se permite una.");
       return;
     }
@@ -118,7 +133,15 @@ export function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {!canRegister && status !== null ? (
+      {!adminAlreadyExists && setupUnavailable ? (
+        <p className="rounded-sm border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-200">
+          No se pudo conectar con Firebase Admin en el servidor. Revisa las
+          variables <code className="text-js-text">FIREBASE_ADMIN_*</code> en
+          Vercel (sobre todo la private key).
+        </p>
+      ) : null}
+
+      {adminAlreadyExists ? (
         <p className="rounded-sm border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-200">
           Ya existe una cuenta admin. Solo se permite una.
         </p>
@@ -139,7 +162,10 @@ export function RegisterForm() {
           disabled={isDisabled}
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="border-js-border bg-js-bg text-js-text w-full rounded-sm border px-3 py-2 text-sm disabled:opacity-60"
+          className={cn(
+            "border-js-border bg-js-bg text-js-text w-full rounded-sm border px-3 py-2 text-sm disabled:opacity-60",
+            blockedControlClass,
+          )}
         />
       </div>
 
@@ -159,7 +185,10 @@ export function RegisterForm() {
           disabled={isDisabled}
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          className="border-js-border bg-js-bg text-js-text w-full rounded-sm border px-3 py-2 text-sm disabled:opacity-60"
+          className={cn(
+            "border-js-border bg-js-bg text-js-text w-full rounded-sm border px-3 py-2 text-sm disabled:opacity-60",
+            blockedControlClass,
+          )}
         />
       </div>
 
@@ -179,7 +208,10 @@ export function RegisterForm() {
           disabled={isDisabled}
           value={confirmPassword}
           onChange={(event) => setConfirmPassword(event.target.value)}
-          className="border-js-border bg-js-bg text-js-text w-full rounded-sm border px-3 py-2 text-sm disabled:opacity-60"
+          className={cn(
+            "border-js-border bg-js-bg text-js-text w-full rounded-sm border px-3 py-2 text-sm disabled:opacity-60",
+            blockedControlClass,
+          )}
         />
       </div>
 
@@ -192,7 +224,10 @@ export function RegisterForm() {
       <button
         type="submit"
         disabled={isDisabled}
-        className="js-btn-primary w-full justify-center disabled:opacity-60"
+        className={cn(
+          "js-btn-primary w-full justify-center disabled:opacity-60",
+          blockedControlClass,
+        )}
       >
         {loading ? "Creando…" : "Crear cuenta admin"}
       </button>
@@ -200,10 +235,18 @@ export function RegisterForm() {
       <GoogleSignInButton
         label="Registrar con Google"
         disabled={isDisabled}
+        className={blockedControlClass}
         onError={setError}
         onSuccess={async (idToken) => {
-          if (!canRegister) {
+          if (adminAlreadyExists) {
             setError("Ya existe una cuenta admin. Solo se permite una.");
+            return;
+          }
+
+          if (setupUnavailable) {
+            setError(
+              "Firebase Admin no está disponible en el servidor. Revisa la configuración en Vercel.",
+            );
             return;
           }
 

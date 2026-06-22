@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { cn } from "@/lib/cn";
 import { getFirebaseAuth } from "@/lib/firebase/client";
 
 type GoogleSignInButtonProps = {
   label: string;
   disabled?: boolean;
+  className?: string;
   onSuccess: (idToken: string) => Promise<void>;
   onError: (message: string) => void;
 };
@@ -14,6 +16,7 @@ type GoogleSignInButtonProps = {
 export function GoogleSignInButton({
   label,
   disabled = false,
+  className,
   onSuccess,
   onError,
 }: GoogleSignInButtonProps) {
@@ -40,7 +43,10 @@ export function GoogleSignInButton({
       type="button"
       disabled={disabled || loading}
       onClick={() => void handleClick()}
-      className="js-btn-secondary w-full justify-center disabled:opacity-60"
+      className={cn(
+        "js-btn-secondary w-full justify-center disabled:opacity-60",
+        className,
+      )}
     >
       {loading ? "Conectando…" : label}
     </button>

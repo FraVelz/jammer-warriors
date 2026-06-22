@@ -6,10 +6,14 @@ const STEPS = [{ num: "1" }, { num: "2" }, { num: "3" }, { num: "4" }] as const;
 
 type OrderInstructionsProps = {
   stripeEnabled: boolean;
+  discordInvite: string;
 };
 
-export function OrderInstructions({ stripeEnabled }: OrderInstructionsProps) {
-  const { paypalEmail, discordInvite } = getSiteConfig();
+export function OrderInstructions({
+  stripeEnabled,
+  discordInvite,
+}: OrderInstructionsProps) {
+  const { paypalEmail } = getSiteConfig();
 
   return (
     <section id="order-instruction" className="js-order-section">

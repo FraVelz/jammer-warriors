@@ -2,8 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/icons/Icon";
 import { PageShell } from "@/components/layout/PageShell";
-import { getSiteConfig } from "@/features/shop/data/site-config";
 import { isStripeConfigured } from "@/lib/env/server-env";
+import { getDiscordInvite } from "@/lib/site-settings/get-discord-invite";
 import { getStripe } from "@/lib/stripe/server";
 
 type SuccessPageProps = {
@@ -36,7 +36,7 @@ export default async function CheckoutSuccessPage({
     notFound();
   }
 
-  const { discordInvite } = getSiteConfig();
+  const discordInvite = await getDiscordInvite();
   const itemName = session.metadata?.itemName ?? "Your order";
   const kind = session.metadata?.kind;
   const isProduct = kind === "product";
