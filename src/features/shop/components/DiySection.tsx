@@ -39,7 +39,11 @@ type DiySectionProps = {
 
 export function DiySection({ tutorials, onBuy }: DiySectionProps) {
   return (
-    <section id="diy" aria-labelledby="diy-heading" className="border-js-border mt-5 border-t-2 pt-10">
+    <section
+      id="diy"
+      aria-labelledby="diy-heading"
+      className="border-js-border mt-5 border-t-2 pt-10"
+    >
       <h2
         id="diy-heading"
         className="text-js-accent mb-5 flex items-center gap-2 text-2xl"

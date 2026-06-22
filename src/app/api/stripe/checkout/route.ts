@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server";
 import { createCheckoutSession } from "@/features/shop/lib/create-checkout-session";
 import { isStripeConfigured } from "@/lib/env/server-env";
-import {
-  enforceRateLimit,
-  rateLimitHeaders,
-} from "@/lib/rate-limit";
+import { enforceRateLimit, rateLimitHeaders } from "@/lib/rate-limit";
 import type { PurchaseKind } from "@/features/shop/types/purchase";
 
 type CheckoutBody = {
