@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getFirebaseAuth } from "@/lib/firebase/client";
+import type { DiscordInviteSource } from "@/lib/site-settings/get-discord-invite";
 
 type DiscordInviteFormProps = {
   initialInvite: string;
-  source: "firestore" | "env";
+  source: DiscordInviteSource;
 };
 
 export function DiscordInviteForm({
@@ -84,14 +85,11 @@ export function DiscordInviteForm({
         </h2>
         <p className="text-js-text-muted mb-4 text-sm">
           URL actual mostrada en la tienda. Fuente:{" "}
-          {source === "firestore"
-            ? "Firestore"
-            : "variable de entorno (fallback)"}
-          .
+          {source === "firestore" ? "Firestore" : "sin configurar"}.
         </p>
 
         <p className="border-js-border bg-js-bg mb-4 rounded-sm border px-3 py-2 text-sm break-all">
-          {savedInvite}
+          {savedInvite || "—"}
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">

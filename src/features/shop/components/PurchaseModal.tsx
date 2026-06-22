@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Icon } from "@/components/icons/Icon";
 import { cn } from "@/lib/cn";
+import { DiscordInviteLink } from "@/features/shop/components/DiscordInviteLink";
 import { getSiteConfig } from "@/features/shop/data/site-config";
 import type {
   PaymentMethod,
@@ -19,7 +20,7 @@ type PurchaseModalProps = {
   stripeEnabled: boolean;
   stripeLoading: boolean;
   stripeError: string | null;
-  discordInvite: string;
+  discordInvite: string | null;
   onClose: () => void;
   onConfirm: () => void;
 };
@@ -79,7 +80,7 @@ type PurchaseModalContentProps = {
   stripeEnabled: boolean;
   stripeLoading: boolean;
   stripeError: string | null;
-  discordInvite: string;
+  discordInvite: string | null;
   onClose: () => void;
   onConfirm: () => void;
 };
@@ -189,14 +190,12 @@ function PurchaseModalContent({
         <ol className="text-js-text-muted list-inside list-decimal space-y-1">
           <li>
             Join our Discord:{" "}
-            <a
-              href={discordInvite}
-              target="_blank"
-              rel="noopener noreferrer"
+            <DiscordInviteLink
+              invite={discordInvite}
               className="js-text-link break-all"
             >
-              {discordInvite}
-            </a>
+              {discordInvite ?? "Discord invite not configured yet"}
+            </DiscordInviteLink>
           </li>
           <li>Open a ticket</li>
           <li>

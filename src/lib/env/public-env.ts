@@ -2,7 +2,6 @@ import type { FirebaseOptions } from "firebase/app";
 
 const PUBLIC_DEFAULTS = {
   NEXT_PUBLIC_PAYPAL_EMAIL: "cotsalva3@gmail.com",
-  NEXT_PUBLIC_DISCORD_INVITE: "https://discord.gg/r3GnxdWF",
   NEXT_PUBLIC_DELIVERY_FEE: "5",
 } as const;
 

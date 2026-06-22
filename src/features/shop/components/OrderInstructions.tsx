@@ -1,12 +1,13 @@
 import { Icon } from "@/components/icons/Icon";
 import { cn } from "@/lib/cn";
+import { DiscordInviteLink } from "@/features/shop/components/DiscordInviteLink";
 import { getSiteConfig } from "@/features/shop/data/site-config";
 
 const STEPS = [{ num: "1" }, { num: "2" }, { num: "3" }, { num: "4" }] as const;
 
 type OrderInstructionsProps = {
   stripeEnabled: boolean;
-  discordInvite: string;
+  discordInvite: string | null;
 };
 
 export function OrderInstructions({
@@ -93,14 +94,12 @@ export function OrderInstructions({
                 <>
                   Join our
                   <br />
-                  <a
-                    href={discordInvite}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <DiscordInviteLink
+                    invite={discordInvite}
                     className="js-text-link"
                   >
                     Discord server
-                  </a>
+                  </DiscordInviteLink>
                 </>
               )}
               {step.num === "3" && (
@@ -129,16 +128,26 @@ export function OrderInstructions({
         ))}
       </div>
 
-      <a
-        id="discord-ticket"
-        href={discordInvite}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="js-btn-discord"
-      >
-        <Icon name="message-circle" size={20} />
-        JOIN DISCORD & OPEN TICKET
-      </a>
+      {discordInvite ? (
+        <a
+          id="discord-ticket"
+          href={discordInvite}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="js-btn-discord"
+        >
+          <Icon name="message-circle" size={20} />
+          JOIN DISCORD & OPEN TICKET
+        </a>
+      ) : (
+        <p
+          id="discord-ticket"
+          tabIndex={-1}
+          className="text-js-text-dim mt-4 text-sm"
+        >
+          Discord invite not configured yet — set it in the admin panel.
+        </p>
+      )}
 
       <p className="text-js-text-dim mt-4 text-sm">
         <span className="inline-flex items-start gap-1">

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Icon } from "@/components/icons/Icon";
+import { DiscordInviteLink } from "@/features/shop/components/DiscordInviteLink";
 import { getSiteConfig } from "@/features/shop/data/site-config";
 
 export function ContactSection({
@@ -7,7 +8,7 @@ export function ContactSection({
   discordInvite,
 }: {
   stripeEnabled: boolean;
-  discordInvite: string;
+  discordInvite: string | null;
 }) {
   const { paypalEmail } = getSiteConfig();
 
@@ -19,14 +20,9 @@ export function ContactSection({
           questions? orders? support?
           <br />
           join our{" "}
-          <a
-            href={discordInvite}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="js-text-link"
-          >
+          <DiscordInviteLink invite={discordInvite} className="js-text-link">
             Discord server
-          </a>{" "}
+          </DiscordInviteLink>{" "}
           – we reply within hours.
         </span>
       </p>

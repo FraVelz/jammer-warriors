@@ -38,7 +38,7 @@ Entregar un informe **accionable** en cuatro ejes, ordenado por **prioridad** (P
    - `pnpm run lint`
    - `pnpm run typecheck`
    - `pnpm run build` con las mismas vars que CI (`.github/workflows/ci.yml`):
-     `NEXT_PUBLIC_PAYPAL_EMAIL`, `NEXT_PUBLIC_DISCORD_INVITE`, `NEXT_PUBLIC_DELIVERY_FEE`, `NEXT_PUBLIC_SITE_URL`
+     `NEXT_PUBLIC_PAYPAL_EMAIL`, `NEXT_PUBLIC_DELIVERY_FEE`, `NEXT_PUBLIC_SITE_URL`
    - `pnpm audit` (CVE en dependencias; reportar solo hallazgos reales)
    - Opcional si aporta valor: `pnpm run format:check`
 2. **Revisión dirigida del código** según las checklists de cada eje (abajo).
@@ -77,7 +77,7 @@ revisión pero mantener el formato del informe en las cuatro secciones (puede ha
 - **Ausencia actual** de `src/app/robots.ts`, `src/app/sitemap.ts` — revisar como gap P2 mínimo.
 - **Ausencia** de imágenes OG/Twitter en `src/app/` o `public/` — revisar impacto en compartidos sociales.
 - `next.config.ts` — headers de caché estática; sin `images` config (no hay `next/image` hoy).
-- Variables: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_PAYPAL_EMAIL`, `NEXT_PUBLIC_DISCORD_INVITE`, `NEXT_PUBLIC_DELIVERY_FEE`
+- Variables: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_PAYPAL_EMAIL`, `NEXT_PUBLIC_DELIVERY_FEE` — Discord invite via Firestore/admin, not env.
   — documentadas en README o `.env.local` de referencia; CI usa `https://example.com` como URL de build.
 
 ### Páginas (prioridad de revisión)

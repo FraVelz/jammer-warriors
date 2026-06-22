@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { DiscordInviteForm } from "@/features/admin/components/DiscordInviteForm";
+import type { DiscordInviteSource } from "@/lib/site-settings/get-discord-invite";
 
 type AdminDashboardPageProps = {
   email: string;
-  discordInvite: string;
-  source: "firestore" | "env";
+  discordInvite: string | null;
+  source: DiscordInviteSource;
 };
 
 export function AdminDashboardPage({
@@ -24,7 +25,7 @@ export function AdminDashboardPage({
         </p>
       </header>
 
-      <DiscordInviteForm initialInvite={discordInvite} source={source} />
+      <DiscordInviteForm initialInvite={discordInvite ?? ""} source={source} />
 
       <p className="text-js-text-dim text-sm">
         <Link href="/" className="js-text-link">

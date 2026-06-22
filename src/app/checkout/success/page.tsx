@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/icons/Icon";
 import { PageShell } from "@/components/layout/PageShell";
+import { DiscordInviteLink } from "@/features/shop/components/DiscordInviteLink";
 import { isStripeConfigured } from "@/lib/env/server-env";
 import { getDiscordInvite } from "@/lib/site-settings/get-discord-invite";
 import { getStripe } from "@/lib/stripe/server";
@@ -73,14 +74,12 @@ export default async function CheckoutSuccessPage({
           <ol className="text-js-text-muted list-inside list-decimal space-y-2">
             <li>
               Join our Discord:{" "}
-              <a
-                href={discordInvite}
-                target="_blank"
-                rel="noopener noreferrer"
+              <DiscordInviteLink
+                invite={discordInvite}
                 className="js-text-link break-all"
               >
-                {discordInvite}
-              </a>
+                {discordInvite ?? "Discord invite not configured yet"}
+              </DiscordInviteLink>
             </li>
             <li>Open a ticket</li>
             <li>
@@ -102,15 +101,22 @@ export default async function CheckoutSuccessPage({
           </p>
         </div>
 
-        <a
-          href={discordInvite}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="js-btn-discord mt-6"
-        >
-          <Icon name="message-circle" size={20} />
-          JOIN DISCORD & OPEN TICKET
-        </a>
+        {discordInvite ? (
+          <a
+            href={discordInvite}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="js-btn-discord mt-6"
+          >
+            <Icon name="message-circle" size={20} />
+            JOIN DISCORD & OPEN TICKET
+          </a>
+        ) : (
+          <p className="text-js-text-dim mt-6 text-center text-sm">
+            Discord invite not configured yet — contact support via PayPal email
+            on the shop page.
+          </p>
+        )}
 
         <p className="text-js-text-dim mt-4 text-center text-sm">
           <Link href="/" className="js-text-link">

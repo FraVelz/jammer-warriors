@@ -1,8 +1,9 @@
 import { unstable_cache } from "next/cache";
-import { getSiteConfig } from "@/features/shop/data/site-config";
 import { getAdminFirestore } from "@/lib/firebase/admin";
 import { SITE_DOC_PATH, type SiteRecord } from "@/lib/firebase/constants";
 import { isFirebaseAdminConfigured } from "@/lib/env/server-env";
+
+export type DiscordInviteSource = "firestore" | "unset";
 
 async function readDiscordInviteFromFirestore(): Promise<string | null> {
   if (!isFirebaseAdminConfigured()) return null;
@@ -23,22 +24,17 @@ const getCachedFirestoreInvite = unstable_cache(
   { revalidate: 60, tags: ["discord-invite-firestore"] },
 );
 
-export async function getDiscordInvite(): Promise<string> {
-  const fromFirestore = await getCachedFirestoreInvite();
-  if (fromFirestore) return fromFirestore;
-  return getSiteConfig().discordInvite;
+export async function getDiscordInvite(): Promise<string | null> {
+  return getCachedFirestoreInvite();
 }
 
 export async function getDiscordInviteForAdmin(): Promise<{
-  discordInvite: string;
-  source: "firestore" | "env";
+  discordInvite: string | null;
+  source: DiscordInviteSource;
 }> {
   const fromFirestore = await readDiscordInviteFromFirestore();
   if (fromFirestore) {
     return { discordInvite: fromFirestore, source: "firestore" };
   }
-  return {
-    discordInvite: getSiteConfig().discordInvite,
-    source: "env",
-  };
+  return { discordInvite: null, source: "unset" };
 }

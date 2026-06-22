@@ -19,7 +19,7 @@ import { usePurchaseFlow } from "@/features/shop/hooks/usePurchaseFlow";
 
 type ShopPageProps = {
   stripeEnabled: boolean;
-  discordInvite: string;
+  discordInvite: string | null;
 };
 
 export function ShopPage({ stripeEnabled, discordInvite }: ShopPageProps) {
