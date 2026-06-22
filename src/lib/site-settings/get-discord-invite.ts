@@ -1,4 +1,3 @@
-import { unstable_cache } from "next/cache";
 import { getAdminFirestore } from "@/lib/firebase/admin";
 import { SITE_DOC_PATH, type SiteRecord } from "@/lib/firebase/constants";
 import { isFirebaseAdminConfigured } from "@/lib/env/server-env";
@@ -18,23 +17,26 @@ async function readDiscordInviteFromFirestore(): Promise<string | null> {
   }
 }
 
-const getCachedFirestoreInvite = unstable_cache(
-  readDiscordInviteFromFirestore,
-  ["discord-invite-firestore"],
-  { revalidate: 60, tags: ["discord-invite-firestore"] },
-);
-
 export async function getDiscordInvite(): Promise<string | null> {
-  return getCachedFirestoreInvite();
+  try {
+    return await readDiscordInviteFromFirestore();
+  } catch {
+    return null;
+  }
 }
 
 export async function getDiscordInviteForAdmin(): Promise<{
   discordInvite: string | null;
   source: DiscordInviteSource;
 }> {
-  const fromFirestore = await readDiscordInviteFromFirestore();
-  if (fromFirestore) {
-    return { discordInvite: fromFirestore, source: "firestore" };
+  try {
+    const fromFirestore = await readDiscordInviteFromFirestore();
+    if (fromFirestore) {
+      return { discordInvite: fromFirestore, source: "firestore" };
+    }
+  } catch {
+    // Fall through to unset — admin panel can still save a new URL.
   }
+
   return { discordInvite: null, source: "unset" };
 }

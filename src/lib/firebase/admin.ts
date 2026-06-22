@@ -1,14 +1,7 @@
-import {
-  applicationDefault,
-  cert,
-  getApps,
-  initializeApp,
-  type App,
-} from "firebase-admin/app";
+import { cert, getApps, initializeApp, type App } from "firebase-admin/app";
 import { getAuth, type Auth } from "firebase-admin/auth";
 import { getFirestore, type Firestore } from "firebase-admin/firestore";
 import {
-  getServerEnv,
   isFirebaseAdminConfigured,
   requireFirebaseAdminEnv,
 } from "@/lib/env/server-env";
@@ -18,9 +11,8 @@ let auth: Auth | null = null;
 let firestore: Firestore | null = null;
 
 function normalizePrivateKey(privateKey: string): string {
-  return privateKey.includes("\\n")
-    ? privateKey.replace(/\\n/g, "\n")
-    : privateKey;
+  const unquoted = privateKey.replace(/^["']|["']$/g, "");
+  return unquoted.includes("\\n") ? unquoted.replace(/\\n/g, "\n") : unquoted;
 }
 
 export function getFirebaseAdminApp(): App {
@@ -41,17 +33,9 @@ export function getFirebaseAdminApp(): App {
       return app;
     }
 
-    const projectId =
-      getServerEnv("FIREBASE_ADMIN_PROJECT_ID") ?? "jammer-warriors";
-
-    app =
-      getApps().find((candidate) => candidate.name === "[DEFAULT]") ??
-      initializeApp({
-        credential: applicationDefault(),
-        projectId,
-      });
-
-    return app;
+    throw new Error(
+      "Firebase Admin is not configured (FIREBASE_ADMIN_* env vars missing)",
+    );
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unknown Firebase Admin error";

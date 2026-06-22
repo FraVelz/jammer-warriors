@@ -37,7 +37,12 @@ export default async function CheckoutSuccessPage({
     notFound();
   }
 
-  const discordInvite = await getDiscordInvite();
+  let discordInvite: string | null = null;
+  try {
+    discordInvite = await getDiscordInvite();
+  } catch {
+    discordInvite = null;
+  }
   const itemName = session.metadata?.itemName ?? "Your order";
   const kind = session.metadata?.kind;
   const isProduct = kind === "product";

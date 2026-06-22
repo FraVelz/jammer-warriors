@@ -10,7 +10,12 @@ export const generateMetadata = generateShopMetadata;
 export default async function HomePage() {
   await connection();
   const stripeEnabled = isStripeConfigured();
-  const discordInvite = await getDiscordInvite();
+  let discordInvite: string | null = null;
+  try {
+    discordInvite = await getDiscordInvite();
+  } catch {
+    discordInvite = null;
+  }
 
   return (
     <>
