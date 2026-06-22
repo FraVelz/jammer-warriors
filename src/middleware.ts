@@ -4,6 +4,12 @@ import { ADMIN_SESSION_COOKIE } from "@/lib/firebase/constants";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  if (pathname === "/admin") {
+    const session = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
+    const destination = session ? "/admin/dashboard" : "/admin/login";
+    return NextResponse.redirect(new URL(destination, request.url));
+  }
+
   if (pathname.startsWith("/admin/dashboard")) {
     const session = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
     if (!session) {

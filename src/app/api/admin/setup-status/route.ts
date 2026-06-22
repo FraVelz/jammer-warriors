@@ -10,9 +10,16 @@ export async function GET() {
     );
   }
 
-  const exists = await adminExists();
-  return NextResponse.json({
-    canRegister: !exists,
-    configured: true,
-  });
+  try {
+    const exists = await adminExists();
+    return NextResponse.json({
+      canRegister: !exists,
+      configured: true,
+    });
+  } catch {
+    return NextResponse.json(
+      { canRegister: false, configured: false },
+      { status: 503 },
+    );
+  }
 }
