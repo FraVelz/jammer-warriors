@@ -3,8 +3,8 @@ import { AdminAuthGate } from "@/features/admin/components/AdminAuthGate";
 
 export function AdminLoginPage() {
   return (
-    <div className="space-y-6">
-      <header className="text-center">
+    <div className="flex w-full max-w-md flex-col items-center gap-6">
+      <header className="w-full text-center">
         <p className="text-js-accent mb-2 text-sm font-bold tracking-wide uppercase">
           Jammer Warriors
         </p>

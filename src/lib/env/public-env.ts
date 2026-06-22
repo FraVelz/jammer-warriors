@@ -8,15 +8,6 @@ const PUBLIC_DEFAULTS = {
 
 type PublicEnvKey = keyof typeof PUBLIC_DEFAULTS;
 
-const FIREBASE_PUBLIC_KEYS = [
-  "NEXT_PUBLIC_FIREBASE_API_KEY",
-  "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN",
-  "NEXT_PUBLIC_FIREBASE_PROJECT_ID",
-  "NEXT_PUBLIC_FIREBASE_APP_ID",
-] as const;
-
-type FirebasePublicKey = (typeof FIREBASE_PUBLIC_KEYS)[number];
-
 function isProductionBuild(): boolean {
   return process.env.NODE_ENV === "production";
 }
@@ -34,35 +25,52 @@ export function getPublicEnvNumber(key: "NEXT_PUBLIC_DELIVERY_FEE"): number {
   return parsed;
 }
 
-export function getOptionalPublicEnv(key: string): string | undefined {
-  const value = process.env[key];
-  return value && value.length > 0 ? value : undefined;
+function readFirebasePublicEnv() {
+  return {
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  };
 }
 
 export function isFirebaseClientConfigured(): boolean {
-  return FIREBASE_PUBLIC_KEYS.every((key) => Boolean(process.env[key]));
+  const { apiKey, authDomain, projectId, appId } = readFirebasePublicEnv();
+  return Boolean(apiKey && authDomain && projectId && appId);
 }
 
 export function getFirebaseClientConfig(): FirebaseOptions {
-  const config = Object.fromEntries(
-    FIREBASE_PUBLIC_KEYS.map((key) => [key, process.env[key]]),
-  ) as Record<FirebasePublicKey, string | undefined>;
+  const {
+    apiKey,
+    authDomain,
+    projectId,
+    appId,
+    storageBucket,
+    messagingSenderId,
+  } = readFirebasePublicEnv();
 
-  for (const key of FIREBASE_PUBLIC_KEYS) {
-    if (!config[key]) {
-      throw new Error(`${key} is not configured`);
-    }
+  if (!apiKey) {
+    throw new Error("NEXT_PUBLIC_FIREBASE_API_KEY is not configured");
+  }
+  if (!authDomain) {
+    throw new Error("NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN is not configured");
+  }
+  if (!projectId) {
+    throw new Error("NEXT_PUBLIC_FIREBASE_PROJECT_ID is not configured");
+  }
+  if (!appId) {
+    throw new Error("NEXT_PUBLIC_FIREBASE_APP_ID is not configured");
   }
 
   return {
-    apiKey: config.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: config.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: config.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    appId: config.NEXT_PUBLIC_FIREBASE_APP_ID,
-    storageBucket: getOptionalPublicEnv("NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET"),
-    messagingSenderId: getOptionalPublicEnv(
-      "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID",
-    ),
+    apiKey,
+    authDomain,
+    projectId,
+    appId,
+    storageBucket: storageBucket || undefined,
+    messagingSenderId: messagingSenderId || undefined,
   };
 }
 

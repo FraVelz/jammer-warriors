@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "jammer-warriors"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }

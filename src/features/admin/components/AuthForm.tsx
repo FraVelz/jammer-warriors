@@ -11,7 +11,7 @@ export function AuthForm() {
   const [mode, setMode] = useState<AuthMode>("login");
 
   return (
-    <div className="border-js-border bg-js-bg-card w-full max-w-md rounded-sm border p-6">
+    <div className="border-js-border bg-js-bg-card mx-auto w-full max-w-md rounded-sm border p-6">
       <div
         className="border-js-border mb-6 grid grid-cols-2 gap-1 rounded-sm border p-1"
         role="tablist"

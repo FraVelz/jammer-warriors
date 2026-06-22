@@ -13,7 +13,7 @@ export function AdminDashboardPage({
   source,
 }: AdminDashboardPageProps) {
   return (
-    <div className="space-y-6">
+    <div className="w-full space-y-6">
       <header>
         <p className="text-js-accent mb-2 text-sm font-bold tracking-wide uppercase">
           Admin
