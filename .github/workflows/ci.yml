@@ -51,8 +51,8 @@ jobs:
       - name: Prettier
         run: pnpm run format:check
 
-      - name: TypeScript
-        run: pnpm run typecheck
-
       - name: Production build
         run: pnpm run build
+
+      - name: TypeScript
+        run: pnpm run typecheck
