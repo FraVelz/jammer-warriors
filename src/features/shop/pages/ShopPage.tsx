@@ -42,10 +42,6 @@ export function ShopPage({ stripeEnabled, discordInvite }: ShopPageProps) {
     <PageShell width="shop">
       <ShopHeader />
       <LegalWarning />
-      <OrderInstructions
-        stripeEnabled={stripeEnabled}
-        discordInvite={discordInvite}
-      />
       <section
         id="products"
         aria-labelledby="products-heading"
@@ -56,6 +52,10 @@ export function ShopPage({ stripeEnabled, discordInvite }: ShopPageProps) {
       </section>
       <DeliveryNote />
       <DiySection tutorials={DIY_TUTORIALS} onBuy={openDiyPurchase} />
+      <OrderInstructions
+        stripeEnabled={stripeEnabled}
+        discordInvite={discordInvite}
+      />
       <ContactSection
         stripeEnabled={stripeEnabled}
         discordInvite={discordInvite}

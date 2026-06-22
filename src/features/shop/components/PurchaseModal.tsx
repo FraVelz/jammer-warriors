@@ -262,7 +262,7 @@ function PurchaseModalContent({
           {stripeLoading
             ? "Redirecting to Stripe…"
             : isPaypal
-              ? "I understand — show payment steps"
+              ? "Got it — scroll to payment steps"
               : "Pay with Stripe"}
         </button>
         <button
