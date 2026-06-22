@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
-import { getAdminAuth, getAdminFirestore } from "@/lib/firebase/admin";
+import { getAdminAuth, tryGetAdminFirestore } from "@/lib/firebase/admin";
 import {
   ADMIN_DOC_PATH,
   ADMIN_SESSION_COOKIE,
@@ -15,9 +15,17 @@ export type VerifiedAdminSession = {
 
 async function getAdminRecord(): Promise<AdminRecord | null> {
   if (!isFirebaseAdminConfigured()) return null;
-  const snap = await getAdminFirestore().doc(ADMIN_DOC_PATH).get();
-  if (!snap.exists) return null;
-  return snap.data() as AdminRecord;
+
+  const db = tryGetAdminFirestore();
+  if (!db) return null;
+
+  try {
+    const snap = await db.doc(ADMIN_DOC_PATH).get();
+    if (!snap.exists) return null;
+    return snap.data() as AdminRecord;
+  } catch {
+    return null;
+  }
 }
 
 export async function adminExists(): Promise<boolean> {

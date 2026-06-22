@@ -1,4 +1,4 @@
-import { getAdminFirestore } from "@/lib/firebase/admin";
+import { tryGetAdminFirestore } from "@/lib/firebase/admin";
 import { SITE_DOC_PATH, type SiteRecord } from "@/lib/firebase/constants";
 import { isFirebaseAdminConfigured } from "@/lib/env/server-env";
 
@@ -8,7 +8,10 @@ async function readDiscordInviteFromFirestore(): Promise<string | null> {
   if (!isFirebaseAdminConfigured()) return null;
 
   try {
-    const snap = await getAdminFirestore().doc(SITE_DOC_PATH).get();
+    const db = tryGetAdminFirestore();
+    if (!db) return null;
+
+    const snap = await db.doc(SITE_DOC_PATH).get();
     if (!snap.exists) return null;
     const data = snap.data() as SiteRecord;
     return data.discordInvite ?? null;

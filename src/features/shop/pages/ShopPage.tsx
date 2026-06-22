@@ -16,13 +16,14 @@ import { ProductsSectionTitle } from "@/features/shop/components/ProductsSection
 import { PurchaseModal } from "@/features/shop/components/PurchaseModal";
 import { ShopHeader } from "@/features/shop/components/ShopHeader";
 import { usePurchaseFlow } from "@/features/shop/hooks/usePurchaseFlow";
+import { useDiscordInvite } from "@/features/shop/hooks/useDiscordInvite";
 
 type ShopPageProps = {
   stripeEnabled: boolean;
-  discordInvite: string | null;
 };
 
-export function ShopPage({ stripeEnabled, discordInvite }: ShopPageProps) {
+export function ShopPage({ stripeEnabled }: ShopPageProps) {
+  const discordInvite = useDiscordInvite();
   const {
     dialogRef,
     item,

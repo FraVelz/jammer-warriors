@@ -56,3 +56,11 @@ export function getAdminFirestore(): Firestore {
   }
   return firestore;
 }
+
+export function tryGetAdminFirestore(): Firestore | null {
+  try {
+    return getAdminFirestore();
+  } catch {
+    return null;
+  }
+}
