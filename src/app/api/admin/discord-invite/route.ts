@@ -15,6 +15,8 @@ import {
 import { getDiscordInviteForAdmin } from "@/lib/site-settings/get-discord-invite";
 import { isFirebaseAdminConfigured } from "@/lib/env/server-env";
 
+export const runtime = "nodejs";
+
 type DiscordInviteBody = {
   discordInvite?: string;
 };
@@ -75,7 +77,7 @@ export async function PATCH(request: NextRequest) {
     );
   }
 
-  await getAdminFirestore().doc(SITE_DOC_PATH).set(
+  await (await getAdminFirestore()).doc(SITE_DOC_PATH).set(
     {
       discordInvite,
       updatedAt: FieldValue.serverTimestamp(),

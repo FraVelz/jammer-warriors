@@ -16,7 +16,7 @@ export type VerifiedAdminSession = {
 async function getAdminRecord(): Promise<AdminRecord | null> {
   if (!isFirebaseAdminConfigured()) return null;
 
-  const db = tryGetAdminFirestore();
+  const db = await tryGetAdminFirestore();
   if (!db) return null;
 
   try {
@@ -38,10 +38,8 @@ export async function verifySessionCookie(
 ): Promise<VerifiedAdminSession | null> {
   if (!isFirebaseAdminConfigured()) return null;
   try {
-    const decoded = await getAdminAuth().verifySessionCookie(
-      sessionCookie,
-      true,
-    );
+    const auth = await getAdminAuth();
+    const decoded = await auth.verifySessionCookie(sessionCookie, true);
     const admin = await getAdminRecord();
     if (!admin || admin.uid !== decoded.uid) {
       return null;
@@ -61,7 +59,8 @@ export async function verifyIdTokenForAdmin(
 ): Promise<VerifiedAdminSession | null> {
   if (!isFirebaseAdminConfigured()) return null;
   try {
-    const decoded = await getAdminAuth().verifyIdToken(idToken);
+    const auth = await getAdminAuth();
+    const decoded = await auth.verifyIdToken(idToken);
     const admin = await getAdminRecord();
     if (!admin || admin.uid !== decoded.uid) {
       return null;
@@ -98,7 +97,8 @@ export async function createAdminSessionCookie(
     throw new Error("Firebase admin is not configured");
   }
   const { SESSION_MAX_AGE_MS } = await import("@/lib/firebase/constants");
-  return getAdminAuth().createSessionCookie(idToken, {
+  const auth = await getAdminAuth();
+  return auth.createSessionCookie(idToken, {
     expiresIn: SESSION_MAX_AGE_MS,
   });
 }

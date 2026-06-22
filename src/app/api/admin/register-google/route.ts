@@ -8,6 +8,8 @@ import {
 } from "@/lib/rate-limit";
 import { isFirebaseAdminConfigured } from "@/lib/env/server-env";
 
+export const runtime = "nodejs";
+
 type RegisterGoogleBody = {
   idToken?: string;
 };
@@ -39,7 +41,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Token requerido" }, { status: 400 });
   }
 
-  const auth = getAdminAuth();
+  const auth = await getAdminAuth();
   let decoded;
 
   try {
@@ -48,7 +50,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Token inválido" }, { status: 401 });
   }
 
-  const db = getAdminFirestore();
+  const db = await getAdminFirestore();
   const adminRef = db.doc(ADMIN_DOC_PATH);
   const existing = await adminRef.get();
 

@@ -8,7 +8,7 @@ async function readDiscordInviteFromFirestore(): Promise<string | null> {
   if (!isFirebaseAdminConfigured()) return null;
 
   try {
-    const db = tryGetAdminFirestore();
+    const db = await tryGetAdminFirestore();
     if (!db) return null;
 
     const snap = await db.doc(SITE_DOC_PATH).get();

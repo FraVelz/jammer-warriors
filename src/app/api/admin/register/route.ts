@@ -8,6 +8,8 @@ import {
 } from "@/lib/rate-limit";
 import { isFirebaseAdminConfigured } from "@/lib/env/server-env";
 
+export const runtime = "nodejs";
+
 type RegisterBody = {
   email?: string;
   password?: string;
@@ -53,7 +55,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const db = getAdminFirestore();
+  const db = await getAdminFirestore();
   const adminRef = db.doc(ADMIN_DOC_PATH);
   const existing = await adminRef.get();
   if (existing.exists) {
@@ -63,7 +65,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const auth = getAdminAuth();
+  const auth = await getAdminAuth();
   let uid: string;
 
   try {

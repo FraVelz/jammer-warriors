@@ -22,7 +22,7 @@ export async function checkRateLimit(
     return { allowed: true, retryAfterMs: 0 };
   }
 
-  const db = getAdminFirestore();
+  const db = await getAdminFirestore();
   const docRef = db.doc(
     `${RATE_LIMIT_COLLECTION}/${sanitizeRateLimitKey(key)}`,
   );

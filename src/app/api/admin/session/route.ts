@@ -12,6 +12,8 @@ import {
 import { enforceRateLimit, rateLimitHeaders } from "@/lib/rate-limit";
 import { isFirebaseAdminConfigured } from "@/lib/env/server-env";
 
+export const runtime = "nodejs";
+
 type SessionBody = {
   idToken?: string;
 };

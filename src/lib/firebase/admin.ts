@@ -1,27 +1,50 @@
-import { cert, getApps, initializeApp, type App } from "firebase-admin/app";
-import { getAuth, type Auth } from "firebase-admin/auth";
-import { getFirestore, type Firestore } from "firebase-admin/firestore";
 import {
+  getFirebaseAdminEnv,
   isFirebaseAdminConfigured,
-  requireFirebaseAdminEnv,
 } from "@/lib/env/server-env";
 
-let app: App | null = null;
-let auth: Auth | null = null;
-let firestore: Firestore | null = null;
+type FirebaseApp = import("firebase-admin/app").App;
+type FirebaseAuth = import("firebase-admin/auth").Auth;
+type Firestore = import("firebase-admin/firestore").Firestore;
 
-function normalizePrivateKey(privateKey: string): string {
-  const unquoted = privateKey.replace(/^["']|["']$/g, "");
-  return unquoted.includes("\\n") ? unquoted.replace(/\\n/g, "\n") : unquoted;
+let app: FirebaseApp | null = null;
+let auth: FirebaseAuth | null = null;
+let firestore: Firestore | null = null;
+let initPromise: Promise<FirebaseApp> | null = null;
+
+export function normalizePrivateKey(privateKey: string): string {
+  let key = privateKey.trim();
+
+  if (
+    (key.startsWith('"') && key.endsWith('"')) ||
+    (key.startsWith("'") && key.endsWith("'"))
+  ) {
+    key = key.slice(1, -1);
+  }
+
+  if (key.includes("\\n")) {
+    key = key.replace(/\\n/g, "\n");
+  }
+
+  return key;
 }
 
-export function getFirebaseAdminApp(): App {
+async function ensureFirebaseAdminApp(): Promise<FirebaseApp> {
   if (app) return app;
 
-  try {
-    if (isFirebaseAdminConfigured()) {
-      const { projectId, clientEmail, privateKey } = requireFirebaseAdminEnv();
-      app =
+  if (!initPromise) {
+    initPromise = (async () => {
+      if (!isFirebaseAdminConfigured()) {
+        throw new Error(
+          "Firebase Admin is not configured (FIREBASE_ADMIN_* env vars missing)",
+        );
+      }
+
+      const { cert, getApps, initializeApp } =
+        await import("firebase-admin/app");
+      const { projectId, clientEmail, privateKey } = getFirebaseAdminEnv()!;
+
+      const nextApp =
         getApps().find((candidate) => candidate.name === "[DEFAULT]") ??
         initializeApp({
           credential: cert({
@@ -30,12 +53,21 @@ export function getFirebaseAdminApp(): App {
             privateKey: normalizePrivateKey(privateKey),
           }),
         });
-      return app;
-    }
 
-    throw new Error(
-      "Firebase Admin is not configured (FIREBASE_ADMIN_* env vars missing)",
-    );
+      app = nextApp;
+      return nextApp;
+    })().catch((error) => {
+      initPromise = null;
+      throw error;
+    });
+  }
+
+  return initPromise;
+}
+
+export async function getFirebaseAdminApp(): Promise<FirebaseApp> {
+  try {
+    return await ensureFirebaseAdminApp();
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unknown Firebase Admin error";
@@ -43,23 +75,25 @@ export function getFirebaseAdminApp(): App {
   }
 }
 
-export function getAdminAuth(): Auth {
+export async function getAdminAuth(): Promise<FirebaseAuth> {
   if (!auth) {
-    auth = getAuth(getFirebaseAdminApp());
+    const { getAuth } = await import("firebase-admin/auth");
+    auth = getAuth(await getFirebaseAdminApp());
   }
   return auth;
 }
 
-export function getAdminFirestore(): Firestore {
+export async function getAdminFirestore(): Promise<Firestore> {
   if (!firestore) {
-    firestore = getFirestore(getFirebaseAdminApp());
+    const { getFirestore } = await import("firebase-admin/firestore");
+    firestore = getFirestore(await getFirebaseAdminApp());
   }
   return firestore;
 }
 
-export function tryGetAdminFirestore(): Firestore | null {
+export async function tryGetAdminFirestore(): Promise<Firestore | null> {
   try {
-    return getAdminFirestore();
+    return await getAdminFirestore();
   } catch {
     return null;
   }

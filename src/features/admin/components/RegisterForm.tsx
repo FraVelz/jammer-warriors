@@ -10,6 +10,7 @@ import { GoogleSignInButton } from "@/features/admin/components/GoogleSignInButt
 type SetupStatus = {
   canRegister: boolean;
   configured: boolean;
+  reason?: string;
 };
 
 export function RegisterForm() {
@@ -27,13 +28,6 @@ export function RegisterForm() {
     async function loadStatus() {
       try {
         const response = await fetch("/api/admin/setup-status");
-        if (!response.ok) {
-          if (!cancelled) {
-            setStatus({ canRegister: false, configured: false });
-          }
-          return;
-        }
-
         const data = (await response.json()) as SetupStatus;
         if (!cancelled) setStatus(data);
       } catch {
@@ -135,9 +129,20 @@ export function RegisterForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       {!adminAlreadyExists && setupUnavailable ? (
         <p className="rounded-sm border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-200">
-          No se pudo conectar con Firebase Admin en el servidor. Revisa las
-          variables <code className="text-js-text">FIREBASE_ADMIN_*</code> en
-          Vercel (sobre todo la private key).
+          No se pudo conectar con Firebase Admin en el servidor. Revisa en
+          Vercel{" "}
+          <code className="text-js-text">FIREBASE_ADMIN_SERVICE_ACCOUNT</code>{" "}
+          (JSON completo) o las variables{" "}
+          <code className="text-js-text">FIREBASE_ADMIN_*</code>, sobre todo la
+          private key con <code className="text-js-text">\n</code> literales.
+          {status?.reason ? (
+            <>
+              <br />
+              <span className="text-js-text-dim mt-1 block text-xs">
+                Detalle: {status.reason}
+              </span>
+            </>
+          ) : null}
         </p>
       ) : null}
 

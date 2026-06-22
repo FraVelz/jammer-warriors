@@ -40,7 +40,12 @@ function securityHeaders() {
 
 const nextConfig: NextConfig = {
   // firebase-admin uses Node-only deps (gRPC); must not be bundled for Vercel serverless.
-  serverExternalPackages: ["firebase-admin"],
+  serverExternalPackages: [
+    "firebase-admin",
+    "@google-cloud/firestore",
+    "google-gax",
+    "@grpc/grpc-js",
+  ],
   async headers() {
     const rules = [
       {
