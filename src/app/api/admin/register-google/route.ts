@@ -3,7 +3,7 @@ import { getAdminAuth, getAdminFirestore } from "@/lib/firebase/admin";
 import { ADMIN_DOC_PATH } from "@/lib/firebase/constants";
 import {
   enforceRateLimit,
-  FieldValue,
+  firestoreServerTimestamp,
   rateLimitHeaders,
 } from "@/lib/rate-limit";
 import { isFirebaseAdminConfigured } from "@/lib/env/server-env";
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
       uid: decoded.uid,
       email,
       provider: "google.com",
-      createdAt: FieldValue.serverTimestamp(),
+      createdAt: await firestoreServerTimestamp(),
     });
   } catch {
     await auth.deleteUser(decoded.uid).catch(() => undefined);

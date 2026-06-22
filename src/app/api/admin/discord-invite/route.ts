@@ -9,7 +9,7 @@ import {
 } from "@/lib/firebase/discord-invite";
 import {
   enforceRateLimit,
-  FieldValue,
+  firestoreServerTimestamp,
   rateLimitHeaders,
 } from "@/lib/rate-limit";
 import { getDiscordInviteForAdmin } from "@/lib/site-settings/get-discord-invite";
@@ -80,7 +80,7 @@ export async function PATCH(request: NextRequest) {
   await (await getAdminFirestore()).doc(SITE_DOC_PATH).set(
     {
       discordInvite,
-      updatedAt: FieldValue.serverTimestamp(),
+      updatedAt: await firestoreServerTimestamp(),
       updatedBy: admin.uid,
     },
     { merge: true },

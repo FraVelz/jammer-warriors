@@ -1,4 +1,3 @@
-import { FieldValue } from "firebase-admin/firestore";
 import { getAdminFirestore } from "@/lib/firebase/admin";
 import { isFirebaseAdminConfigured } from "@/lib/env/server-env";
 
@@ -77,4 +76,7 @@ export function rateLimitHeaders(
   return { "Retry-After": String(retryAfterSec) };
 }
 
-export { FieldValue };
+export async function firestoreServerTimestamp() {
+  const { FieldValue } = await import("firebase-admin/firestore");
+  return FieldValue.serverTimestamp();
+}
