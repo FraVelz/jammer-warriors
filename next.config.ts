@@ -2,11 +2,12 @@ import type { NextConfig } from "next";
 
 const productionCsp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://apis.google.com https://www.gstatic.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' blob: data:",
-  "font-src 'self'",
-  "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com",
+  "img-src 'self' blob: data: https://www.gstatic.com https://*.googleusercontent.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com https://firebaseinstallations.googleapis.com https://firestore.googleapis.com",
+  "frame-src 'self' https://accounts.google.com https://*.google.com https://*.firebaseapp.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -45,6 +46,8 @@ const nextConfig: NextConfig = {
     "@google-cloud/firestore",
     "google-gax",
     "@grpc/grpc-js",
+    "jwks-rsa",
+    "jose",
   ],
   async headers() {
     const rules = [
