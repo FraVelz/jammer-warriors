@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { cn } from "@/lib/cn";
 import { getFirebaseAuth } from "@/lib/firebase/client";
+import { mapFirebaseClientAuthError } from "@/lib/firebase/client-auth-errors";
 
 type GoogleSignInButtonProps = {
   label: string;
@@ -24,34 +25,9 @@ function prefersGoogleRedirect(): boolean {
 }
 
 function mapGoogleAuthError(error: unknown): string {
-  const code =
-    typeof error === "object" &&
-    error !== null &&
-    "code" in error &&
-    typeof error.code === "string"
-      ? error.code
-      : "";
-
-  if (code === "auth/unauthorized-domain") {
-    return "Este dominio no está autorizado en Firebase. Añade jammer-warriors.vercel.app en Authentication → Settings → Authorized domains.";
-  }
-
-  if (
-    code === "auth/popup-blocked" ||
-    code === "auth/cancelled-popup-request"
-  ) {
-    return "El navegador bloqueó la ventana de Google. Prueba de nuevo o usa email/contraseña.";
-  }
-
-  if (code === "auth/popup-closed-by-user") {
-    return "Se cerró la ventana de Google antes de completar el inicio de sesión.";
-  }
-
-  if (error instanceof Error && error.message) {
-    return error.message;
-  }
-
-  return "No se pudo autenticar con Google";
+  return mapFirebaseClientAuthError(error) === "No se pudo autenticar"
+    ? "No se pudo autenticar con Google"
+    : mapFirebaseClientAuthError(error);
 }
 
 export function GoogleSignInButton({

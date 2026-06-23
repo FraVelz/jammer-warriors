@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { getFirebaseAuth } from "@/lib/firebase/client";
+import { mapFirebaseClientAuthError } from "@/lib/firebase/client-auth-errors";
 import { GoogleSignInButton } from "@/features/admin/components/GoogleSignInButton";
 
 type SetupStatus = {
@@ -117,11 +118,14 @@ export function RegisterForm() {
       const idToken = await credential.user.getIdToken();
       await completeRegistration(idToken);
     } catch (registerError) {
-      const message =
-        registerError instanceof Error
-          ? registerError.message
-          : "No se pudo crear la cuenta";
-      setError(message);
+      if (
+        registerError instanceof Error &&
+        registerError.message.startsWith("No se pudo crear")
+      ) {
+        setError(registerError.message);
+        return;
+      }
+      setError(mapFirebaseClientAuthError(registerError));
     } finally {
       setLoading(false);
     }
@@ -150,7 +154,9 @@ export function RegisterForm() {
 
       {adminAlreadyExists ? (
         <p className="rounded-sm border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-200">
-          Ya existe una cuenta admin. Solo se permite una.
+          Ya existe una cuenta admin. Ve a la pestaña{" "}
+          <strong className="text-js-text">Iniciar sesión</strong> con el mismo
+          email y contraseña.
         </p>
       ) : null}
 

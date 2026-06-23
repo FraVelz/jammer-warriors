@@ -2,15 +2,34 @@ import type { NextConfig } from "next";
 
 const productionCsp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://apis.google.com https://www.gstatic.com",
+  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://apis.google.com https://accounts.google.com https://www.gstatic.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' blob: data: https://www.gstatic.com https://*.googleusercontent.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com https://firebaseinstallations.googleapis.com https://firestore.googleapis.com",
+  [
+    "connect-src 'self'",
+    "https://vitals.vercel-insights.com",
+    "https://*.vercel-insights.com",
+    "https://*.googleapis.com",
+    "https://*.google.com",
+    "https://*.firebaseio.com",
+    "wss://*.firebaseio.com",
+    "wss://*.firebaseapp.com",
+    "https://*.firebaseapp.com",
+    "https://firebase.googleapis.com",
+    "https://identitytoolkit.googleapis.com",
+    "https://securetoken.googleapis.com",
+    "https://www.googleapis.com",
+    "https://firebaseinstallations.googleapis.com",
+    "https://firestore.googleapis.com",
+    "https://oauth2.googleapis.com",
+    "https://accounts.google.com",
+    "https://apis.google.com",
+  ].join(" "),
   "frame-src 'self' https://accounts.google.com https://*.google.com https://*.firebaseapp.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  "form-action 'self' https://accounts.google.com",
 ].join("; ");
 
 const sharedSecurityHeaders = [

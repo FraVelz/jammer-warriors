@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { getFirebaseAuth } from "@/lib/firebase/client";
+import { mapFirebaseClientAuthError } from "@/lib/firebase/client-auth-errors";
 import { GoogleSignInButton } from "@/features/admin/components/GoogleSignInButton";
 
 async function establishSession(idToken: string): Promise<string | null> {
@@ -52,8 +53,8 @@ export function LoginForm() {
 
       router.replace("/admin/dashboard");
       router.refresh();
-    } catch {
-      setError("Credenciales incorrectas");
+    } catch (error) {
+      setError(mapFirebaseClientAuthError(error));
     } finally {
       setLoading(false);
     }
