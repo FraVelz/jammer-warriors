@@ -55,3 +55,7 @@ jobs:
 
       - name: TypeScript
         run: pnpm run typecheck
+
+      - name: React Doctor
+        continue-on-error: true
+        run: pnpm run react:doctor

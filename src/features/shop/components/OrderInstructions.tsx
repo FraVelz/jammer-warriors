@@ -17,7 +17,7 @@ export function OrderInstructions({
   const { paypalEmail } = getSiteConfig();
 
   return (
-    <section id="order-instruction" className="mt-10 js-order-section">
+    <section id="order-instruction" className="js-order-section mt-10">
       <h2 className="text-js-accent mb-2 flex items-center justify-center gap-2 text-[22px]">
         <Icon name="pin" size={22} />
         CHOOSE YOUR PAYMENT METHOD
